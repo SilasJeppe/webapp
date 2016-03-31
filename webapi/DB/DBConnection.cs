@@ -38,7 +38,7 @@ namespace webapi.DB
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
             connection.Open();
-            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest WHERE gid = "+id+";";
+            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest WHERE gid = " + id + ";";
             NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
             ds.Reset();
             da.Fill(ds);
@@ -55,8 +55,19 @@ namespace webapi.DB
                 webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
                 listPoints.Add(p);
             }
+            connection.Close();
             return listPoints.FirstOrDefault();
         }
+
+        public void DeletePoint(int id)
+        {
+            connection.Open();
+            string sql = "DELETE FROM gtest WHERE gid = " + id + ";";
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
+
+            connection.Close();
+        }
+
 
 
 
@@ -82,7 +93,7 @@ namespace webapi.DB
                 double pLong = longlat.First();
                 double pLat = longlat.Last();
                 webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
-                
+
 
                 listPoints.Add(p);
 
@@ -100,7 +111,7 @@ namespace webapi.DB
             s = s.TrimEnd(')');
             s = s.Replace('.', ',');
             string[] sDouble = s.Split(' ');
-            foreach(string str in sDouble)
+            foreach (string str in sDouble)
             {
                 double value = double.Parse(str);
                 dList.Add(value);

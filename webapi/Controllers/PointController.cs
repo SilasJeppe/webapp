@@ -42,6 +42,7 @@ namespace webapi.Controllers
         // DELETE: api/Point/5
         public void Delete(int id)
         {
+            dbcon.DeletePoint(id);
         }
     }
 }
