@@ -24,9 +24,9 @@ namespace webapi.Controllers
         }
 
         // GET: api/Point/5
-        public string Get(int id)
+        public webapi.Models.Point Get(int id)
         {
-            return "value";
+            return dbcon.GetPoint(id);
         }
 
         // POST: api/Point

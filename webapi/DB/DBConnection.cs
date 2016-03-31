@@ -32,6 +32,35 @@ namespace webapi.DB
 
         }
 
+        #region Point
+
+        public webapi.Models.Point GetPoint(int id)
+        {
+            List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
+            connection.Open();
+            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest WHERE gid = "+id+";";
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
+            ds.Reset();
+            da.Fill(ds);
+            dt = ds.Tables[0];
+            List<DataRow> list = dt.AsEnumerable().ToList();
+            foreach (DataRow x in list)
+            {
+                string name = x.Field<string>("name");
+                int pointID = x.Field<int>("gid");
+                List<double> longlat = new List<double>();
+                longlat = geomToDouble(x.Field<string>("ST_AsText"));
+                double pLong = longlat.First();
+                double pLat = longlat.Last();
+                webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
+                listPoints.Add(p);
+            }
+            return listPoints.FirstOrDefault();
+        }
+
+
+
+
         public List<webapi.Models.Point> allPoints()
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
@@ -62,6 +91,8 @@ namespace webapi.DB
             return listPoints;
         }
 
+
+
         public List<double> geomToDouble(string s)
         {
             List<double> dList = new List<double>();
@@ -78,7 +109,11 @@ namespace webapi.DB
             return dList;
         }
 
+        #endregion
 
+        #region User
+
+        #endregion
     }
 
 
