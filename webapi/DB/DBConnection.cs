@@ -111,7 +111,10 @@ namespace webapi.DB
             List<double> dList = new List<double>();
             s = s.TrimStart('P', 'O', 'I', 'N', 'T', '(');
             s = s.TrimEnd(')');
-            s = s.Replace('.', ',');
+
+            //Uncomment this on danish systems
+            //s = s.Replace('.', ',');
+
             string[] sDouble = s.Split(' ');
             foreach (string str in sDouble)
             {
