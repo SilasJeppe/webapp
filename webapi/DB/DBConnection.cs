@@ -38,11 +38,11 @@ namespace webapi.DB
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
             connection.Open();
-            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest WHERE gid = " + id + ";";
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
-            ds.Reset();
-            da.Fill(ds);
-            dt = ds.Tables[0];
+            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest WHERE gid = @id";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
             foreach (DataRow x in list)
             {
@@ -62,30 +62,36 @@ namespace webapi.DB
         public void DeletePoint(int id)
         {
             connection.Open();
-            string sql = "DELETE FROM gtest WHERE gid = " + id + ";";
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
-
+            string sql = "DELETE FROM gtest WHERE gid = @id";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            int i = cmd.ExecuteNonQuery();
             connection.Close();
         }
 
-
-
-
+        public void InsertPoint(int id, string name, double pLong, double pLat)
+        {
+            connection.Open();
+            string sql = "INSERT INTO gtest(gid, name, geom) VALUES(@id, @name, ST_MakePoint(@pLong, @pLat))";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@pLong", pLong);
+            cmd.Parameters.AddWithValue("@pLat", pLat);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+        }
 
         public List<webapi.Models.Point> allPoints()
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
             connection.Open();
-            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest;";
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
-            ds.Reset();
-            da.Fill(ds);
-            dt = ds.Tables[0];
+            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
-
             foreach (DataRow x in list)
             {
-
                 string name = x.Field<string>("name");
                 int pointID = x.Field<int>("gid");
                 List<double> longlat = new List<double>();
@@ -93,16 +99,34 @@ namespace webapi.DB
                 double pLong = longlat.First();
                 double pLat = longlat.Last();
                 webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
-
-
                 listPoints.Add(p);
-
             }
             connection.Close();
             return listPoints;
+
+            //List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
+            //connection.Open();
+            //string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest;";
+            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
+            //ds.Reset();
+            //da.Fill(ds);
+            //dt = ds.Tables[0];
+            //List<DataRow> list = dt.AsEnumerable().ToList();
+
+            //foreach (DataRow x in list)
+            //{
+            //    string name = x.Field<string>("name");
+            //    int pointID = x.Field<int>("gid");
+            //    List<double> longlat = new List<double>();
+            //    longlat = geomToDouble(x.Field<string>("ST_AsText"));
+            //    double pLong = longlat.First();
+            //    double pLat = longlat.Last();
+            //    webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
+            //    listPoints.Add(p);
+            //}
+            //connection.Close();
+            //return listPoints;
         }
-
-
 
         public List<double> geomToDouble(string s)
         {

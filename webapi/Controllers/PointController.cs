@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using webapi.Models;
 using webapi.DB;
+using System.Web.Http.Description;
+using System.Threading.Tasks;
 
 namespace webapi.Controllers
 {
@@ -24,11 +26,19 @@ namespace webapi.Controllers
         }
 
         // GET: api/Point/5
-        public webapi.Models.Point Get(int id)
+        [ResponseType(typeof(webapi.Models.Point))]
+        public async Task<IHttpActionResult> Get(int id)
         {
-            return dbcon.GetPoint(id);
+            webapi.Models.Point point = dbcon.GetPoint(id);
+            if(point == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(point);
         }
 
+        
         // POST: api/Point
         public void Post([FromBody]string value)
         {
@@ -40,9 +50,20 @@ namespace webapi.Controllers
         }
 
         // DELETE: api/Point/5
-        public void Delete(int id)
+        [ResponseType(typeof(webapi.Models.Point))]
+        public async Task<IHttpActionResult> Delete(int id)
         {
+            webapi.Models.Point point = dbcon.GetPoint(id);
+            if (point == null)
+            {
+                return NotFound();
+            }
+
             dbcon.DeletePoint(id);
+            return Ok(point);
+
         }
+
+        
     }
 }
