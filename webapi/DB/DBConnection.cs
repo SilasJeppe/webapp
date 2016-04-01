@@ -78,7 +78,8 @@ namespace webapi.DB
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@pLong", pLong);
             cmd.Parameters.AddWithValue("@pLat", pLat);
-            NpgsqlDataReader dr = cmd.ExecuteReader();
+            int i = cmd.ExecuteNonQuery();
+            connection.Close();
         }
 
         public List<webapi.Models.Point> allPoints()
@@ -103,29 +104,6 @@ namespace webapi.DB
             }
             connection.Close();
             return listPoints;
-
-            //List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
-            //connection.Open();
-            //string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest;";
-            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, connection);
-            //ds.Reset();
-            //da.Fill(ds);
-            //dt = ds.Tables[0];
-            //List<DataRow> list = dt.AsEnumerable().ToList();
-
-            //foreach (DataRow x in list)
-            //{
-            //    string name = x.Field<string>("name");
-            //    int pointID = x.Field<int>("gid");
-            //    List<double> longlat = new List<double>();
-            //    longlat = geomToDouble(x.Field<string>("ST_AsText"));
-            //    double pLong = longlat.First();
-            //    double pLat = longlat.Last();
-            //    webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
-            //    listPoints.Add(p);
-            //}
-            //connection.Close();
-            //return listPoints;
         }
 
         public List<double> geomToDouble(string s)

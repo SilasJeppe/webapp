@@ -38,11 +38,32 @@ namespace webapi.Controllers
             return Ok(point);
         }
 
-        
+
         // POST: api/Point
-        public void Post([FromBody]string value)
+        [ResponseType(typeof(webapi.Models.Point))]
+        public async Task<IHttpActionResult> Post([FromBody]webapi.Models.Point p)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            dbcon.InsertPoint(p.pointID, p.name, p.longlat.Item1, p.longlat.Item2);
+            return CreatedAtRoute("DefaultApi", new { id = p.pointID }, p);
+
         }
+
+        //public async Task<IHttpActionResult> PostBook(Book book)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.Books.Add(book);
+        //    await db.SaveChangesAsync();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = book.Id }, book);
+        //}
 
         // PUT: api/Point/5
         public void Put(int id, [FromBody]string value)
