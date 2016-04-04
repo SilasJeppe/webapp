@@ -14,14 +14,26 @@ namespace webapi.Models
         [DataMember]
         public string name { get; set; }
         [DataMember]
-        public Tuple<double, double> longlat { get; set; }
-       
+        public Longlat Coords { get; set; }
+
+        public struct Longlat
+        {
+            public double pLong { get; set; }
+            public double pLat { get; set; }
+            public Longlat(double x, double y) : this()
+            {
+                pLong = x;
+                pLat = y;
+            }
+        }
+
+
 
         public Point(int pointID, string name, double pLong, double pLat)
         {
             this.pointID = pointID;
             this.name = name;
-            this.longlat = new Tuple<double, double>(pLong, pLat);
+            Coords = new Longlat(pLong, pLat);
         }
 
         public Point()
@@ -31,4 +43,3 @@ namespace webapi.Models
 
     }
 }
-      
