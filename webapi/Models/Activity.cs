@@ -26,7 +26,7 @@ namespace webapi.Models
         [DataMember]
         public string EndAddress { get; set; }
         [DataMember]
-        public Route ActivityRoute { get; set; }
+        public int UserID { get; set; }
 
         public Activity()
         {
