@@ -128,8 +128,118 @@ namespace webapi.DB
         #endregion
 
         #region User
+        public webapi.Models.User GetUser(int id)
+        {
+            List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
+            connection.Open();
+            string sql = "SELECT id, firstname, surname, address, city, zipcode, phonenumber, email, passwordhash FROM user WHERE id = @id";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            List<DataRow> list = dt.AsEnumerable().ToList();
+            foreach (DataRow x in list)
+            {
+                webapi.Models.User user = new webapi.Models.User()
+                {
+                    ID = x.Field<int>("id"),
+                    Firstname = x.Field<string>("firstname"),
+                    Surname = x.Field<string>("surname"),
+                    Address = x.Field<string>("address"),
+                    City = x.Field<string>("city"),
+                    ZipCode = x.Field<int>("zipcode"),
+                    PhoneNumber = x.Field<int>("phonenumber"),
+                    Email = x.Field<string>("email"),
+                    password = x.Field<string>("passwordhash")
+                };
+                
+                listUsers.Add(user);
+            }
+            connection.Close();
+            return listUsers.FirstOrDefault();
+        }
+
+        public List<webapi.Models.User> allPoints()
+        {
+            List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
+            connection.Open();
+            string sql = "SELECT id, firstname, surname, address, city, zipcode, phonenumber, email, passwordhash FROM user";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            List<DataRow> list = dt.AsEnumerable().ToList();
+            foreach (DataRow x in list)
+            {
+                webapi.Models.User user = new webapi.Models.User()
+                {
+                    ID = x.Field<int>("id"),
+                    Firstname = x.Field<string>("firstname"),
+                    Surname = x.Field<string>("surname"),
+                    Address = x.Field<string>("address"),
+                    City = x.Field<string>("city"),
+                    ZipCode = x.Field<int>("zipcode"),
+                    PhoneNumber = x.Field<int>("phonenumber"),
+                    Email = x.Field<string>("email"),
+                    password = x.Field<string>("passwordhash")
+                };
+
+                listUsers.Add(user);
+            }
+            connection.Close();
+            return listUsers;
+        }
+
+        public void InsertUser(string fistname, string surname, string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
+        {
+            connection.Open();
+            string sql = "INSERT INTO user(fistname, surname, address, city, zipcode, phonenumber, email, passwordhash) VALUES(@fistname, @surname, @address, @city, @zipcode, @phonenumber, @email, @passwordhash)";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@fistname", fistname);
+            cmd.Parameters.AddWithValue("@surname", surname);
+            cmd.Parameters.AddWithValue("@address", address);
+            cmd.Parameters.AddWithValue("@city", city);
+            cmd.Parameters.AddWithValue("@zipcode", zipcode);
+            cmd.Parameters.AddWithValue("@phonenumber", phonenumber);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@passwordhash", passwordhash);
+            int i = cmd.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void DeleteUser(int id)
+        {
+            connection.Open();
+            string sql = "DELETE FROM user WHERE id = @id";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            int i = cmd.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void UpdateUser(int id, string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
+        {
+            connection.Open();
+            string sql = "UPDATE user SET address = @address, city = @city, zipcode = @zipcode, phonenumber = @phonenumber, email = @email, passwordhash = @passwordhash WHERE id = @id";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@address", address);
+            cmd.Parameters.AddWithValue("@city", city);
+            cmd.Parameters.AddWithValue("@zipcode", zipcode);
+            cmd.Parameters.AddWithValue("@phonenumber", phonenumber);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@passwordhash", passwordhash);
+            int i = cmd.ExecuteNonQuery();
+            connection.Close();
+        }
 
         #endregion
+
+        #region Activity
+        #endregion
+
+        #region Route
+        #endregion
+
     }
 
 
