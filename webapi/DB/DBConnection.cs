@@ -159,7 +159,7 @@ namespace webapi.DB
             return listUsers.FirstOrDefault();
         }
 
-        public List<webapi.Models.User> allPoints()
+        public List<webapi.Models.User> allUsers()
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
             connection.Open();
