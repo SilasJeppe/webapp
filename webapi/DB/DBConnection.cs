@@ -163,7 +163,7 @@ namespace webapi.DB
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
             connection.Open();
-            string sql = "SELECT id, firstname, surname, address, city, zipcode, phonenumber, email, passwordhash FROM user";
+            string sql = "SELECT id, firstname, surname, address, city, zipcode, phonenumber, email, passwordhash FROM public.user";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
             NpgsqlDataReader dr = cmd.ExecuteReader();
             dt.Load(dr);
@@ -189,12 +189,12 @@ namespace webapi.DB
             return listUsers;
         }
 
-        public void InsertUser(string fistname, string surname, string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
+        public void InsertUser(string firstname, string surname, string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
         {
             connection.Open();
-            string sql = "INSERT INTO user(fistname, surname, address, city, zipcode, phonenumber, email, passwordhash) VALUES(@fistname, @surname, @address, @city, @zipcode, @phonenumber, @email, @passwordhash)";
+            string sql = "INSERT INTO public.user(firstname, surname, address, city, zipcode, phonenumber, email, passwordhash) VALUES(@firstname, @surname, @address, @city, @zipcode, @phonenumber, @email, @passwordhash)";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@fistname", fistname);
+            cmd.Parameters.AddWithValue("@firstname", firstname);
             cmd.Parameters.AddWithValue("@surname", surname);
             cmd.Parameters.AddWithValue("@address", address);
             cmd.Parameters.AddWithValue("@city", city);
