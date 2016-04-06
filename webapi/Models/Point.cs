@@ -13,6 +13,7 @@ namespace webapi.Models
         public int ID { get; set; }
         [DataMember]
         public Longlat Coords { get; set; }
+        [DataMember]
         public int RouteID { get; set; }
 
         public struct Longlat

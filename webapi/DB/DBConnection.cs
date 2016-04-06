@@ -34,31 +34,6 @@ namespace webapi.DB
 
         #region Point
 
-        public webapi.Models.Point GetPointsByRouteID(int id)
-        {
-            List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
-            connection.Open();
-            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest WHERE gid = @id";
-            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@id", id);
-            NpgsqlDataReader dr = cmd.ExecuteReader();
-            dt.Load(dr);
-            List<DataRow> list = dt.AsEnumerable().ToList();
-            foreach (DataRow x in list)
-            {
-                string name = x.Field<string>("name");
-                int pointID = x.Field<int>("gid");
-                List<double> longlat = new List<double>();
-                longlat = geomToDouble(x.Field<string>("ST_AsText"));
-                double pLong = longlat.First();
-                double pLat = longlat.Last();
-                webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
-                listPoints.Add(p);
-            }
-            connection.Close();
-            return listPoints.FirstOrDefault();
-        }
-
         public void DeletePoint(int id)
         {
             connection.Open();
@@ -181,7 +156,8 @@ namespace webapi.DB
                     ZipCode = x.Field<int>("zipcode"),
                     PhoneNumber = x.Field<int>("phonenumber"),
                     Email = x.Field<string>("email"),
-                    password = x.Field<string>("passwordhash")
+                    password = x.Field<string>("passwordhash"),
+                    ActivityList = GetAllActivityForUser(x.Field<int>("id"))
                 };
 
                 listUsers.Add(user);
@@ -289,7 +265,8 @@ namespace webapi.DB
                     Time = x.Field<DateTime>("Time"),
                     StartAddress = x.Field<string>("startaddress"),
                     EndAddress = x.Field<string>("endaddress"),
-                    UserID = x.Field<int>("userid")
+                    UserID = x.Field<int>("userid"),
+                    Route = GetRouteByActivityID(x.Field<int>("id"))
                 };
 
                 listActivity.Add(activity);
@@ -363,7 +340,6 @@ namespace webapi.DB
                     ID = x.Field<int>("id"),
                     ActivityID = x.Field<int>("activityid"),
                     PointList = GetPointsByRouteID(x.Field<int>("id"))
-
                 };
 
                 listRoute.Add(route);
