@@ -15,24 +15,24 @@ namespace webapi.Controllers
     {
         private DBConnection dbcon = new DBConnection();
         // GET: api/Point
-        public IEnumerable<webapi.Models.Point> Get()
-        {
-            List<webapi.Models.Point> doubleList = new List<webapi.Models.Point>();
-            doubleList = dbcon.allPoints();
-            return doubleList;
-        }
+        //public IEnumerable<webapi.Models.Point> Get()
+        //{
+        //    List<webapi.Models.Point> doubleList = new List<webapi.Models.Point>();
+        //    doubleList = dbcon.allPoints();
+        //    return doubleList;
+        //}
 
         // GET: api/Point/5
-        [ResponseType(typeof(webapi.Models.Point))]
-        public async Task<IHttpActionResult> Get(int id)
-        {
-            webapi.Models.Point point = dbcon.GetPoint(id);
-            if(point == null)
-            {
-                return NotFound();
-            }
-            return Ok(point);
-        }
+        //[ResponseType(typeof(webapi.Models.Point))]
+        //public async Task<IHttpActionResult> Get(int id)
+        //{
+        //    webapi.Models.Point point = dbcon.GetPoint(id);
+        //    if(point == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(point);
+        //}
 
 
         // POST: api/Point

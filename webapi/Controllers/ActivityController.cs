@@ -18,7 +18,7 @@ namespace webapi.Controllers
         public IEnumerable<webapi.Models.Activity> Get()
         {
             List<webapi.Models.Activity> activityList = new List<Activity>();
-            activityList = dbcon.allActivity();
+            activityList = dbcon.GetAllActivity();
             return activityList;
         }
 
@@ -43,7 +43,7 @@ namespace webapi.Controllers
                 return BadRequest(ModelState);
             }
             dbcon.InsertActivity(a.Name, a.Description, a.Distance, a.Date, a.Time, a.StartAddress, a.EndAddress, a.UserID);
-            return CreatedAtRoute("DefaultApi", new { }, u);
+            return CreatedAtRoute("DefaultApi", new { }, a);
         }
 
         // PUT: api/Activity/5

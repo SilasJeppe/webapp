@@ -18,7 +18,7 @@ namespace webapi.Controllers
         public IEnumerable<webapi.Models.User> Get()
         {
             List<webapi.Models.User> userList = new List<webapi.Models.User>();
-            userList = dbcon.allUsers();
+            userList = dbcon.GetUsers();
             return userList;
         }
 

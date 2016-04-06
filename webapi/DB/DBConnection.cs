@@ -34,6 +34,31 @@ namespace webapi.DB
 
         #region Point
 
+        public webapi.Models.Point GetPoint(int id)
+        {
+            List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
+            connection.Open();
+            string sql = "SELECT id, ST_AsText(geom), routeid FROM public.point WHERE id = @id";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            List<DataRow> list = dt.AsEnumerable().ToList();
+            foreach (DataRow x in list)
+            {
+                int ID = x.Field<int>("id");
+                List<double> longlat = new List<double>();
+                longlat = geomToDouble(x.Field<string>("ST_AsText"));
+                double pLong = longlat.First();
+                double pLat = longlat.Last();
+                int RouteID = x.Field<int>("routeid");
+                webapi.Models.Point p = new webapi.Models.Point(ID, pLong, pLat, RouteID);
+                listPoints.Add(p);
+            }
+            connection.Close();
+            return listPoints.FirstOrDefault();
+        }
+        
         public void DeletePoint(int id)
         {
             connection.Open();
@@ -135,7 +160,7 @@ namespace webapi.DB
             return listUsers.FirstOrDefault();
         }
 
-        public List<webapi.Models.User> allUsers()
+        public List<webapi.Models.User> GetUsers()
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
             connection.Open();
