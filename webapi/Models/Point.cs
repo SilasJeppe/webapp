@@ -10,11 +10,10 @@ namespace webapi.Models
     public class Point
     {
         [DataMember]
-        public int pointID { get; set; }
-        [DataMember]
-        public string name { get; set; }
+        public int ID { get; set; }
         [DataMember]
         public Longlat Coords { get; set; }
+        public int RouteID { get; set; }
 
         public struct Longlat
         {
@@ -29,11 +28,11 @@ namespace webapi.Models
 
 
 
-        public Point(int pointID, string name, double pLong, double pLat)
+        public Point(int ID, double pLong, double pLat, int RouteID)
         {
-            this.pointID = pointID;
-            this.name = name;
+            this.ID = ID;
             Coords = new Longlat(pLong, pLat);
+            this.RouteID = RouteID;
         }
 
         public Point()

@@ -34,7 +34,7 @@ namespace webapi.DB
 
         #region Point
 
-        public webapi.Models.Point GetPoint(int id)
+        public webapi.Models.Point GetPointsByRouteID(int id)
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
             connection.Open();
@@ -82,24 +82,25 @@ namespace webapi.DB
             connection.Close();
         }
 
-        public List<webapi.Models.Point> allPoints()
+        public List<webapi.Models.Point> GetPointsByRouteID(int id)
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
             connection.Open();
-            string sql = "SELECT gid, name, ST_AsText(geom) FROM gtest";
+            string sql = "SELECT id, ST_AsText(geom), routeid FROM public.point WHERE routeid = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
             dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
             foreach (DataRow x in list)
             {
-                string name = x.Field<string>("name");
-                int pointID = x.Field<int>("gid");
+                int ID = x.Field<int>("id");
                 List<double> longlat = new List<double>();
                 longlat = geomToDouble(x.Field<string>("ST_AsText"));
                 double pLong = longlat.First();
                 double pLat = longlat.Last();
-                webapi.Models.Point p = new webapi.Models.Point(pointID, name, pLong, pLat);
+                int RouteID = x.Field<int>("routeid");
+                webapi.Models.Point p = new webapi.Models.Point(ID, pLong, pLat, RouteID);
                 listPoints.Add(p);
             }
             connection.Close();
@@ -132,7 +133,7 @@ namespace webapi.DB
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
             connection.Open();
-            string sql = "SELECT id, firstname, surname, address, city, zipcode, phonenumber, email, passwordhash FROM user WHERE id = @id";
+            string sql = "SELECT * FROM public.user WHERE public.user.id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
             cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
@@ -152,7 +153,7 @@ namespace webapi.DB
                     Email = x.Field<string>("email"),
                     password = x.Field<string>("passwordhash")
                 };
-                
+
                 listUsers.Add(user);
             }
             connection.Close();
@@ -256,7 +257,8 @@ namespace webapi.DB
                     Time = x.Field<DateTime>("Time"),
                     StartAddress = x.Field<string>("startaddress"),
                     EndAddress = x.Field<string>("endaddress"),
-                    UserID = x.Field<int>("userid")
+                    UserID = x.Field<int>("userid"),
+                    Route = GetRouteByActivityID(id)
                 };
 
                 listActivity.Add(activity);
@@ -265,12 +267,13 @@ namespace webapi.DB
             return listActivity.FirstOrDefault();
         }
 
-        public List<webapi.Models.Activity> allActivity()
+        public List<webapi.Models.Activity> GetAllActivityForUser(int id)
         {
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
             connection.Open();
-            string sql = "SELECT * FROM public.activity";
+            string sql = "SELECT * FROM public.activity WHERE userid = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
             dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
@@ -342,6 +345,34 @@ namespace webapi.DB
         #endregion
 
         #region Route
+
+        public webapi.Models.Route GetRouteByActivityID(int id)
+        {
+            List<webapi.Models.Route> listRoute = new List<webapi.Models.Route>();
+            connection.Open();
+            string sql = "SELECT * FROM public.route WHERE activityid = @id";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            List<DataRow> list = dt.AsEnumerable().ToList();
+            foreach (DataRow x in list)
+            {
+                webapi.Models.Route route = new webapi.Models.Route()
+                {
+                    ID = x.Field<int>("id"),
+                    ActivityID = x.Field<int>("activityid"),
+                    PointList = GetPointsByRouteID(x.Field<int>("id"))
+
+                };
+
+                listRoute.Add(route);
+            }
+            connection.Close();
+            return listRoute.FirstOrDefault();
+        }
+
+
         #endregion
 
         #region Point
@@ -349,6 +380,5 @@ namespace webapi.DB
 
 
     }
-
 
 }

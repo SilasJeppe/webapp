@@ -12,6 +12,8 @@ namespace webapi.Models
         [DataMember]
         public int ID { get; set; }
         [DataMember]
+        public int ActivityID { get; set; }
+        [DataMember]
         public List<Point> PointList { get; set; }
 
         public Route()
