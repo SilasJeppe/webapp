@@ -20,7 +20,7 @@ namespace webapi.Models
         [DataMember]
         public DateTime Date { get; set; }
         [DataMember]
-        public DateTime Time { get; set; }
+        public TimeSpan Time { get; set; }
         [DataMember]
         public string StartAddress { get; set; }
         [DataMember]
