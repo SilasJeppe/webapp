@@ -43,8 +43,8 @@ namespace webapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            dbcon.InsertPoint(p.pointID, p.name, p.Coords.pLong, p.Coords.pLat);
-            return CreatedAtRoute("DefaultApi", new { id = p.pointID }, p);
+            dbcon.InsertPoint(p.ID, p.Coords.pLong, p.Coords.pLat, p.RouteID);
+            return CreatedAtRoute("DefaultApi", new { id = p.ID }, p);
         }
         
         // PUT: api/Point/5

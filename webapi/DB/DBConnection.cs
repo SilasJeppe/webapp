@@ -69,15 +69,15 @@ namespace webapi.DB
             connection.Close();
         }
 
-        public void InsertPoint(int id, string name, double pLong, double pLat)
+        public void InsertPoint(int id, double pLong, double pLat, int routeID)
         {
             connection.Open();
-            string sql = "INSERT INTO gtest(gid, name, geom) VALUES(@id, @name, ST_MakePoint(@pLong, @pLat))";
+            string sql = "INSERT INTO gtest(gid, name, geom) VALUES(@id, ST_MakePoint(@pLong, @pLat), @routeID)";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
             cmd.Parameters.AddWithValue("@id", id);
-            cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@pLong", pLong);
             cmd.Parameters.AddWithValue("@pLat", pLat);
+            cmd.Parameters.AddWithValue("@routeID", routeID);
             int i = cmd.ExecuteNonQuery();
             connection.Close();
         }
