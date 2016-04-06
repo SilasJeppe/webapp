@@ -236,6 +236,38 @@ namespace webapi.DB
         #endregion
 
         #region Activity
+
+        public List<webapi.Models.Activity> GetAllActivity()
+        {
+            List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
+            connection.Open();
+            string sql = "SELECT * FROM public.activity";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            List<DataRow> list = dt.AsEnumerable().ToList();
+            foreach (DataRow x in list)
+            {
+                webapi.Models.Activity activity = new webapi.Models.Activity()
+                {
+                    ID = x.Field<int>("id"),
+                    Name = x.Field<string>("name"),
+                    Description = x.Field<string>("description"),
+                    Distance = x.Field<double>("distance"),
+                    Date = x.Field<DateTime>("Date"),
+                    Time = x.Field<DateTime>("Time"),
+                    StartAddress = x.Field<string>("startaddress"),
+                    EndAddress = x.Field<string>("endaddress"),
+                    UserID = x.Field<int>("userid"),
+                    Route = GetRouteByActivityID(x.Field<int>("id"))
+                };
+
+                listActivity.Add(activity);
+            }
+            connection.Close();
+            return listActivity;
+        }
+        
         public webapi.Models.Activity GetActivity(int id)
         {
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
@@ -259,7 +291,7 @@ namespace webapi.DB
                     StartAddress = x.Field<string>("startaddress"),
                     EndAddress = x.Field<string>("endaddress"),
                     UserID = x.Field<int>("userid"),
-                    Route = GetRouteByActivityID(id)
+                    Route = GetRouteByActivityID(x.Field<int>("id"))
                 };
 
                 listActivity.Add(activity);
