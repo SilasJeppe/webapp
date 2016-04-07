@@ -8,20 +8,20 @@ using webapi.Models;
 using webapi.DB;
 using System.Web.Http.Description;
 using System.Threading.Tasks;
+using Npgsql;
 
 namespace webapi.Controllers
 {
     public class PointController : ApiController
     {
-        private DBConnection dbcon = new DBConnection();
+        private DBPoint db = new DBPoint();
         //GET: api/Point
-        public IEnumerable<webapi.Models.Point> Get()
-        {
-            return NotFound();
+        //public IEnumerable<webapi.Models.Point> Get()
+        //{
             //List<webapi.Models.Point> doubleList = new List<webapi.Models.Point>();
-            //doubleList = dbcon.GetPointsByRouteID();
+            //doubleList = db.GetPointsByRouteID();
             //return doubleList;
-        }
+        //}
 
         // GET: api/Point/5
         [ResponseType(typeof(webapi.Models.Point))]
@@ -39,7 +39,7 @@ namespace webapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            dbcon.InsertPoint(p.ID, p.Coords, p.RouteID);
+            db.InsertPoint(p.ID, p.Coords, p.RouteID);
             return CreatedAtRoute("DefaultApi", new { id = p.ID }, p);
         }
 

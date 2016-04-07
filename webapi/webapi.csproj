@@ -43,7 +43,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Npgsql, Version=3.0.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Documents\Visual Studio 2013\Projects\webapi\packages\Npgsql.3.0.5\lib\net45\Npgsql.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -155,9 +155,14 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PointController.cs" />
+    <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DB\DBActivity.cs" />
     <Compile Include="DB\DBConnection.cs" />
+    <Compile Include="DB\DBPoint.cs" />
+    <Compile Include="DB\DBRoute.cs" />
+    <Compile Include="DB\DBUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
