@@ -20,13 +20,12 @@ namespace webapi.DB
             con = DBConnection.GetInstance().GetConnection();
         }
 
-        public List<Route> GetRouteByActivityID()
+        public Route GetRouteByActivityID(int id)
         {
             List<webapi.Models.Route> listRoute = new List<webapi.Models.Route>();
-            con.Open();
-            string sql = "SELECT * FROM public.route"; // WHERE activityid = @id";
+            string sql = "SELECT * FROM public.route WHERE activityid = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            //cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
             dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
@@ -36,14 +35,12 @@ namespace webapi.DB
                 {
                     ID = x.Field<int>("id"),
                     ActivityID = x.Field<int>("activityid"),
-
                     PointList = dbPoint.GetPointsByRouteID(x.Field<int>("id"))
                 };
 
                 listRoute.Add(route);
             }
-            con.Close();
-            return listRoute; //.FirstOrDefault();
+            return listRoute.FirstOrDefault();
         }
     }
 }
