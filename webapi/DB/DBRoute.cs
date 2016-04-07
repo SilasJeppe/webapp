@@ -27,6 +27,7 @@ namespace webapi.DB
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Reset();
             dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
             foreach (DataRow x in list)
