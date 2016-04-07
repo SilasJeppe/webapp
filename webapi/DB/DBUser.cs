@@ -26,6 +26,7 @@ namespace webapi.DB
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Reset();
             dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
             foreach (DataRow x in list)
@@ -40,7 +41,8 @@ namespace webapi.DB
                     ZipCode = x.Field<int>("zipcode"),
                     PhoneNumber = x.Field<int>("phonenumber"),
                     Email = x.Field<string>("email"),
-                    password = x.Field<string>("passwordhash")
+                    password = x.Field<string>("passwordhash"),
+                    ActivityList = dbActivity.GetAllActivityForUser(x.Field<int>("id"))
                 };
 
                 listUsers.Add(user);
