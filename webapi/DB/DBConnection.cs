@@ -8,12 +8,15 @@ using System.Drawing;
 using System.Text;
 using Npgsql;
 using webapi.Models;
+using NpgsqlTypes;
 
 
 namespace webapi.DB
 {
     public class DBConnection
     {
+
+        #region Connection
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
 
@@ -25,6 +28,8 @@ namespace webapi.DB
             "postgis",          //{3} password
             "gisdb");           //{4} database name
 
+
+        #endregion
         // Making connection with Npgsql provider
         NpgsqlConnection connection = new NpgsqlConnection(connectionstring);
         public DBConnection()
@@ -52,8 +57,8 @@ namespace webapi.DB
                 double pLong = longlat.First();
                 double pLat = longlat.Last();
                 int RouteID = x.Field<int>("routeid");
-                webapi.Models.Point p = new webapi.Models.Point(ID, pLong, pLat, RouteID);
-                listPoints.Add(p);
+                //webapi.Models.Point p = new webapi.Models.Point(ID, pLong, pLat, RouteID);
+                //listPoints.Add(p);
             }
             connection.Close();
             return listPoints.FirstOrDefault();
@@ -82,25 +87,22 @@ namespace webapi.DB
             connection.Close();
         }
 
-        public List<webapi.Models.Point> GetPointsByRouteID(int id)
+        public List<webapi.Models.Point> GetPointsByRouteID()
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
             connection.Open();
-            string sql = "SELECT id, ST_AsText(geom), routeid FROM public.point WHERE routeid = @id";
+            string sql = "SELECT id, st_x(geom), st_y(geom), routeid FROM public.point";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@id", id);
+            //cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
             dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
             foreach (DataRow x in list)
             {
                 int ID = x.Field<int>("id");
-                List<double> longlat = new List<double>();
-                longlat = geomToDouble(x.Field<string>("ST_AsText"));
-                double pLong = longlat.First();
-                double pLat = longlat.Last();
                 int RouteID = x.Field<int>("routeid");
-                webapi.Models.Point p = new webapi.Models.Point(ID, pLong, pLat, RouteID);
+                NpgsqlPoint npgP = new NpgsqlPoint(x.Field<double>("st_x"), x.Field<double>("st_y"));
+                webapi.Models.Point p = new webapi.Models.Point(ID, npgP, RouteID);
                 listPoints.Add(p);
             }
             connection.Close();
@@ -396,7 +398,7 @@ namespace webapi.DB
                 {
                     ID = x.Field<int>("id"),
                     ActivityID = x.Field<int>("activityid"),
-                    PointList = GetPointsByRouteID(x.Field<int>("id"))
+                    //PointList = GetPointsByRouteID(x.Field<int>("id"))
                 };
 
                 listRoute.Add(route);

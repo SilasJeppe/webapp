@@ -42,7 +42,7 @@ namespace webapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            dbcon.InsertActivity(a.Name, a.Description, a.Distance, a.Date, a.Time, a.StartAddress, a.EndAddress, a.UserID);
+            //dbcon.InsertActivity(a.Name, a.Description, a.Distance, a.Date, a.Time, a.StartAddress, a.EndAddress, a.UserID);
             return CreatedAtRoute("DefaultApi", new { }, a);
         }
 

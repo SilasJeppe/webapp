@@ -14,13 +14,13 @@ namespace webapi.Controllers
     public class PointController : ApiController
     {
         private DBConnection dbcon = new DBConnection();
-        // GET: api/Point
-        //public IEnumerable<webapi.Models.Point> Get()
-        //{
-        //    List<webapi.Models.Point> doubleList = new List<webapi.Models.Point>();
-        //    doubleList = dbcon.allPoints();
-        //    return doubleList;
-        //}
+         //GET: api/Point
+        public IEnumerable<webapi.Models.Point> Get()
+        {
+            List<webapi.Models.Point> doubleList = new List<webapi.Models.Point>();
+            doubleList = dbcon.GetPointsByRouteID();
+            return doubleList;
+        }
 
         // GET: api/Point/5
         //[ResponseType(typeof(webapi.Models.Point))]
@@ -43,7 +43,7 @@ namespace webapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            dbcon.InsertPoint(p.ID, p.Coords.pLong, p.Coords.pLat, p.RouteID);
+            //dbcon.InsertPoint(p.ID, p.Coords.pLong, p.Coords.pLat, p.RouteID);
             return CreatedAtRoute("DefaultApi", new { id = p.ID }, p);
         }
         

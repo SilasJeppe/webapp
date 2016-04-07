@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
+using NpgsqlTypes;
 
 namespace webapi.Models
 {
@@ -12,27 +13,14 @@ namespace webapi.Models
         [DataMember]
         public int ID { get; set; }
         [DataMember]
-        public Longlat Coords { get; set; }
+        public NpgsqlPoint Coords { get; set; }
         [DataMember]
         public int RouteID { get; set; }
 
-        public struct Longlat
-        {
-            public double pLong { get; set; }
-            public double pLat { get; set; }
-            public Longlat(double x, double y) : this()
-            {
-                pLong = x;
-                pLat = y;
-            }
-        }
-
-
-
-        public Point(int ID, double pLong, double pLat, int RouteID)
+        public Point(int ID, NpgsqlPoint p, int RouteID)
         {
             this.ID = ID;
-            Coords = new Longlat(pLong, pLat);
+            this.Coords = p;
             this.RouteID = RouteID;
         }
 
