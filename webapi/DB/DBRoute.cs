@@ -44,14 +44,18 @@ namespace webapi.DB
             return listRoute.FirstOrDefault();
         }
         //Inserts a route in DB
-        public void InsertRoute(int activityid)
+        public void InsertRoute(Route r)
         {
-            con.Open();
             string sql = "INSERT INTO public.route(activityid) VALUES (@activityid)";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            cmd.Parameters.AddWithValue("@activityid", activityid);
+            cmd.Parameters.AddWithValue("@activityid", r.ActivityID);
             int i = cmd.ExecuteNonQuery();
-            con.Close();
+            int routeid = GetRouteByActivityID(r.ActivityID).ID;
+            foreach (webapi.Models.Point p in r.PointList)
+            {
+                p.RouteID = routeid;
+            }
+            dbPoint.InsertPoints(r.PointList);
         }
     }
 }

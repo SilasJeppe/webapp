@@ -39,10 +39,7 @@ namespace webapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            foreach (webapi.Models.Point p in points)
-            {
-                db.InsertPoint(p.Coords, p.RouteID);
-            }
+            
             //db.InsertPoint(p.ID, p.Coords, p.RouteID);
             return CreatedAtRoute("DefaultApi", new { }, points);
         }

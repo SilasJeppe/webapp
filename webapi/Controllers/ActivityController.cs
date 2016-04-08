@@ -23,7 +23,7 @@ namespace webapi.Controllers
         //}
 
         // GET: api/Activity/5
-        [ResponseType(typeof(webapi.Models.Activity))]
+        [ResponseType(typeof(Activity))]
         public async Task<IHttpActionResult> Get(int id)
         {
             webapi.Models.Activity activity = db.GetActivity(id);
@@ -34,17 +34,17 @@ namespace webapi.Controllers
             return Ok(activity);
         }
 
-        //// POST: api/Activity
-        //[ResponseType(typeof(webapi.Models.Activity))]
-        //public async Task<IHttpActionResult> Post([FromBody]webapi.Models.Activity a)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    //dbcon.InsertActivity(a.Name, a.Description, a.Distance, a.Date, a.Time, a.StartAddress, a.EndAddress, a.UserID);
-        //    return CreatedAtRoute("DefaultApi", new { }, a);
-        //}
+        // POST: api/Activity
+        [ResponseType(typeof(Activity))]
+        public async Task<IHttpActionResult> Post([FromBody]Activity a)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            db.InsertActivity(a);
+            return CreatedAtRoute("DefaultApi", new { }, a);
+        }
 
         //// PUT: api/Activity/5
         //public void Put(int id, [FromBody]string value)
@@ -53,10 +53,10 @@ namespace webapi.Controllers
         //}
 
         // DELETE: api/Activity/5
-        [ResponseType(typeof(webapi.Models.Activity))]
+        [ResponseType(typeof(Activity))]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            webapi.Models.Activity activity = db.GetActivity(id);
+            Activity activity = db.GetActivity(id);
             if (activity == null)
             {
                 return NotFound();

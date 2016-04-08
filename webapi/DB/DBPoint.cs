@@ -18,16 +18,17 @@ namespace webapi.DB
         {
             con = DBConnection.GetInstance().GetConnection();
         }
-        public void InsertPoint(NpgsqlPoint p, int routeID)
+        public void InsertPoints(List<webapi.Models.Point> points)
         {
-            con.Open();
-            string sql = "INSERT INTO public.point(geom, routeid) VALUES(ST_MakePoint(@Long, @Lat), @routeID)";
-            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            cmd.Parameters.AddWithValue("@Long", p.X);
-            cmd.Parameters.AddWithValue("@Lat", p.Y);
-            cmd.Parameters.AddWithValue("@routeID", routeID);
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
+            foreach (webapi.Models.Point p in points)
+            {
+                string sql = "INSERT INTO public.point(geom, routeid) VALUES(ST_MakePoint(@Long, @Lat), @routeID)";
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@Long", p.Coords.X);
+                cmd.Parameters.AddWithValue("@Lat", p.Coords.Y);
+                cmd.Parameters.AddWithValue("@routeID", p.RouteID);
+                int i = cmd.ExecuteNonQuery();
+            }
         }
 
         public List<webapi.Models.Point> GetPointsByRouteID(int id)

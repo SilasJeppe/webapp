@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using webapi.Models;
 
 namespace webapi.DB
 {
@@ -23,6 +24,7 @@ namespace webapi.DB
         //Gets specific Activity, used for delete
         public webapi.Models.Activity GetActivity(int id)
         {
+            con.Open();
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
             string sql = "SELECT * FROM public.activity WHERE id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -46,7 +48,7 @@ namespace webapi.DB
                     UserID = x.Field<int>("userid"),
                     Route = dbRoute.GetRouteByActivityID(x.Field<int>("id"))
                 };
-
+                con.Close();
                 listActivity.Add(activity);
             }
             return listActivity.FirstOrDefault();
@@ -84,20 +86,22 @@ namespace webapi.DB
             return listActivity;
         }
 
-        public void InsertActivity(string name, string description, double distance, DateTime date, DateTime time, string startaddress, string endaddress, int userid)
+        public void InsertActivity(Activity a)
         {
             con.Open();
             string sql = "INSERT INTO public.activity(name, description, distance, date, time, startaddress, endaddress, userid) VALUES (@name, @description, @distance, @date, @time, @startaddress, @endaddress, @userid)";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@description", description);
-            cmd.Parameters.AddWithValue("@distance", distance);
-            cmd.Parameters.AddWithValue("@date", date);
-            cmd.Parameters.AddWithValue("@time", time);
-            cmd.Parameters.AddWithValue("@startaddress", startaddress);
-            cmd.Parameters.AddWithValue("@endaddress", endaddress);
-            cmd.Parameters.AddWithValue("@userid", userid);
+            cmd.Parameters.AddWithValue("@name", a.Name);
+            cmd.Parameters.AddWithValue("@description", a.Description);
+            cmd.Parameters.AddWithValue("@distance", a.Distance);
+            cmd.Parameters.AddWithValue("@date", a.Date);
+            cmd.Parameters.AddWithValue("@time", a.Time);
+            cmd.Parameters.AddWithValue("@startaddress", a.StartAddress);
+            cmd.Parameters.AddWithValue("@endaddress", a.EndAddress);
+            cmd.Parameters.AddWithValue("@userid", a.UserID);
             int i = cmd.ExecuteNonQuery();
+            a.Route.ActivityID = GetAllActivityForUser(a.UserID).LastOrDefault().ID;
+            dbRoute.InsertRoute(a.Route);
             con.Close();
         }
 
