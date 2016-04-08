@@ -43,5 +43,15 @@ namespace webapi.DB
             }
             return listRoute.FirstOrDefault();
         }
+        //Inserts a route in DB
+        public void InsertRoute(int activityid)
+        {
+            con.Open();
+            string sql = "INSERT INTO public.route(activityid) VALUES (@activityid)";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@activityid", activityid);
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+        }
     }
 }

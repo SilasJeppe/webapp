@@ -19,13 +19,16 @@ namespace webapi.DB
             con = DBConnection.GetInstance().GetConnection();
             dbRoute = new DBRoute();
         }
-        public List<webapi.Models.Activity> GetAllActivity()
+
+        //Gets specific Activity, used for delete
+        public webapi.Models.Activity GetActivity(int id)
         {
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
-            con.Open();
-            string sql = "SELECT * FROM public.activity";
+            string sql = "SELECT * FROM public.activity WHERE id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@id", id);
             NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Reset();
             dt.Load(dr);
             List<DataRow> list = dt.AsEnumerable().ToList();
             foreach (DataRow x in list)
@@ -46,11 +49,10 @@ namespace webapi.DB
 
                 listActivity.Add(activity);
             }
-            con.Close();
-            return listActivity;
+            return listActivity.FirstOrDefault();
         }
 
-        
+
         public List<webapi.Models.Activity> GetAllActivityForUser(int id)
         {
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();

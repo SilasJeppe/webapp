@@ -32,15 +32,19 @@ namespace webapi.Controllers
 
 
         // POST: api/Point
-        [ResponseType(typeof(webapi.Models.Point))]
-        public async Task<IHttpActionResult> Post([FromBody]webapi.Models.Point p)
+        [ResponseType(typeof(List<webapi.Models.Point>))]
+        public async Task<IHttpActionResult> Post([FromBody]List<webapi.Models.Point> points)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            db.InsertPoint(p.ID, p.Coords, p.RouteID);
-            return CreatedAtRoute("DefaultApi", new { id = p.ID }, p);
+            foreach (webapi.Models.Point p in points)
+            {
+                db.InsertPoint(p.Coords, p.RouteID);
+            }
+            //db.InsertPoint(p.ID, p.Coords, p.RouteID);
+            return CreatedAtRoute("DefaultApi", new { }, points);
         }
 
         // PUT: api/Point/5

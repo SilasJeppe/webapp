@@ -15,24 +15,24 @@ namespace webapi.Controllers
     {
         private DBActivity db = new DBActivity();
         // GET: api/Activity
-        public IEnumerable<webapi.Models.Activity> Get()
-        {
-            List<webapi.Models.Activity> activityList = new List<Activity>();
-            activityList = db.GetAllActivity();
-            return activityList;
-        }
+        //public IEnumerable<webapi.Models.Activity> Get()
+        //{
+        //    List<webapi.Models.Activity> activityList = new List<Activity>();
+        //    activityList = db.GetAllActivity();
+        //    return activityList;
+        //}
 
         // GET: api/Activity/5
-        //[ResponseType(typeof(webapi.Models.Activity))]
-        //public async Task<IHttpActionResult> Get(int id)
-        //{
-        //    webapi.Models.Activity activity = dbcon.GetActivity(id);
-        //    if (activity == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(activity);
-        //}
+        [ResponseType(typeof(webapi.Models.Activity))]
+        public async Task<IHttpActionResult> Get(int id)
+        {
+            webapi.Models.Activity activity = db.GetActivity(id);
+            if (activity == null)
+            {
+                return NotFound();
+            }
+            return Ok(activity);
+        }
 
         //// POST: api/Activity
         //[ResponseType(typeof(webapi.Models.Activity))]
@@ -52,17 +52,17 @@ namespace webapi.Controllers
         //    //Laves på et senere tidspunkt
         //}
 
-        //// DELETE: api/Activity/5
-        //[ResponseType(typeof(webapi.Models.Activity))]
-        //public async Task<IHttpActionResult> Delete(int id)
-        //{
-        //    webapi.Models.Activity activity = dbcon.GetActivity(id);
-        //    if (activity == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    dbcon.DeleteActivity(id);
-        //    return Ok(activity);
-        //}
+        // DELETE: api/Activity/5
+        [ResponseType(typeof(webapi.Models.Activity))]
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            webapi.Models.Activity activity = db.GetActivity(id);
+            if (activity == null)
+            {
+                return NotFound();
+            }
+            db.DeleteActivity(id);
+            return Ok(activity);
+        }
     }
 }
