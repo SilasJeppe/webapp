@@ -98,7 +98,7 @@ namespace webapi.DB
             int i = cmd.ExecuteNonQuery();
             con.Close();
         }
-
+        //Deletes a User and his Activities
         public void DeleteUser(int id)
         {
             con.Open();
@@ -106,6 +106,7 @@ namespace webapi.DB
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);
             int i = cmd.ExecuteNonQuery();
+            dbActivity.DeleteActivity(id);
             con.Close();
         }
 
