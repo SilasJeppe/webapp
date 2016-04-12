@@ -42,7 +42,8 @@ namespace webapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            db.InsertUser(u.Firstname, u.Surname, u.Address, u.City, u.ZipCode, u.PhoneNumber, u.Email, u.password);
+            string hash = webapi.BLL.Hash.CreateHash(u.password);
+            db.InsertUser(u.Firstname, u.Surname, u.Address, u.City, u.ZipCode, u.PhoneNumber, u.Email, hash);
             return CreatedAtRoute("DefaultApi", new { }, u);
         }
 
