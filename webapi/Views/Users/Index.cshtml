@@ -1,0 +1,18 @@
+﻿@model webapi.Models.User
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<webapi.Models.User> list = ViewBag.List;
+}
+
+<h2>Brugere</h2>
+
+@foreach (var item in list)
+{
+    <ul>
+        <li>
+            @item.Firstname @item.Surname
+        </li>
+    </ul>
+}
+

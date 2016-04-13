@@ -1,0 +1,39 @@
+﻿@model webapi.Models.Activity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //List<webapi.Models.Activity> list = ViewBag.List;
+}
+
+<h2>Activity</h2>
+
+
+
+@foreach (var item in ViewBag.List)
+{
+    <ul>
+        <li>
+            <a href="http:\\www.google.com" >Navn: @item.Name</a>
+        </li>
+        <li>
+            Beskrivelse: @item.Description
+        </li>
+        <li>
+            Turens længde: @item.Distance km.
+        </li>
+        <li>
+            Tid: @item.Time.Hours:@item.Time.Minutes.@item.Time.Seconds.@item.Time.Milliseconds
+        </li>
+        <li>
+            Dato: @item.Date
+        </li>
+        <li>
+            Start addresse: @item.StartAddress
+        </li>
+        <li>
+            Slut addresse: @item.EndAddress
+        </li>
+        <li>
+            Lavet af: @item.UserID
+        </li>
+    </ul>
+}

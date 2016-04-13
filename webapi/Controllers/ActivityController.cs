@@ -15,12 +15,12 @@ namespace webapi.Controllers
     {
         private DBActivity db = new DBActivity();
         // GET: api/Activity
-        //public IEnumerable<webapi.Models.Activity> Get()
-        //{
-        //    List<webapi.Models.Activity> activityList = new List<Activity>();
-        //    activityList = db.GetAllActivity();
-        //    return activityList;
-        //}
+        public IEnumerable<webapi.Models.Activity> Get()
+        {
+            List<webapi.Models.Activity> activityList = new List<Activity>();
+            activityList = db.GetAllActivity();
+            return activityList;
+        }
 
         // GET: api/Activity/5
         [ResponseType(typeof(Activity))]
