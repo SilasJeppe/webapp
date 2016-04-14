@@ -54,12 +54,18 @@ namespace webapi.DB
 
         public void Open()
         {
-            connection.Open();
+            if (connection.State == ConnectionState.Closed)
+            {
+                connection.Open();
+            }
         }
 
         public void Close()
         {
-            connection.Close();
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
         }
     }
 }
