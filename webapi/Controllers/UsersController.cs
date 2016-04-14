@@ -20,6 +20,41 @@ namespace webapi.Controllers
             return View();
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public ActionResult UserLogin(string email, string password)
+        {
+            User user = CheckUser(email);
+            if(user == null)
+            {
+                //USER
+            }
+
+
+        }
+
+        private User CheckUser(string email)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:6617/");
+
+            User user = new User();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("api/User").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                user = response.Content.ReadAsAsync<User>().Result;
+            }
+            
+            return user;
+        }
+
         private List<User> GetData()
         {
             HttpClient client = new HttpClient();

@@ -229,6 +229,7 @@
     <Content Include="Views\Activities\Index.cshtml" />
     <Content Include="Views\Activities\View.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Login.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
