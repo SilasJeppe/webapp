@@ -43,7 +43,7 @@ namespace webapi.DB
             List<DataRow> list = dt.AsEnumerable().ToList();
             foreach (DataRow x in list)
             {
-                int ID = x.Field<int>("id");
+                long ID = x.Field<long>("id");
                 int RouteID = x.Field<int>("routeid");
                 NpgsqlPoint npgP = new NpgsqlPoint(x.Field<double>("st_x"), x.Field<double>("st_y"));
                 webapi.Models.Point p = new webapi.Models.Point(ID, npgP, RouteID);
