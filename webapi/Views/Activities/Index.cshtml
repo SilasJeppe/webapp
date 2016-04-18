@@ -1,0 +1,26 @@
+﻿@model webapi.Models.Activity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<webapi.Models.Activity> list = ViewBag.List;
+}
+
+<h2>Activity</h2>
+
+
+<table class="t1">
+    <tr>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Turens længde</th>
+        <th>Oprettet af</th>
+    </tr>
+    @foreach (var item in list)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>@item.Distance</td>
+            <td>@item.UserID</td>
+        </tr>
+    }
+</table>

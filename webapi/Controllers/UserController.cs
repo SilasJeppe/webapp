@@ -34,6 +34,18 @@ namespace webapi.Controllers
             return Ok(user);
         }
 
+        // GET from email, used at website
+        [ResponseType(typeof(webapi.Models.User))]
+        public async Task<IHttpActionResult> GetEmail(string email)
+        {
+            webapi.Models.User user = db.GetUserFromEmail(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
         // POST: api/User
         [ResponseType(typeof(webapi.Models.User))]
         public async Task<IHttpActionResult> Post([FromBody]webapi.Models.User u)
