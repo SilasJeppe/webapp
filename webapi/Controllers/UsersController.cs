@@ -20,21 +20,23 @@ namespace webapi.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
         
-        [HttpGet]
-        public ActionResult UserLogin(string email, string password)
+        [HttpPost]
+        public ActionResult Login(string email, string password)
         {
             User user = CheckUser(email);
+
             if(user == null)
             {
                 //USER
             }
-
-
+            ViewBag.User = user;
+            return View(); // med cookies
         }
 
         private User CheckUser(string email)
@@ -47,6 +49,7 @@ namespace webapi.Controllers
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
             HttpResponseMessage response = client.GetAsync("api/User").Result;
+
             if (response.IsSuccessStatusCode)
             {
                 user = response.Content.ReadAsAsync<User>().Result;
@@ -64,7 +67,7 @@ namespace webapi.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync("api/User").Result;
+            HttpResponseMessage response = client.GetAsync("api/User?action=").Result;
 
             if (response.IsSuccessStatusCode)
             {
