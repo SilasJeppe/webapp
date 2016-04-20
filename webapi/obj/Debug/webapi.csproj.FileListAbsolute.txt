@@ -107,7 +107,6 @@ C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\webapi.pdb
 C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Antlr3.Runtime.dll
 C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Newtonsoft.Json.dll
-C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Npgsql.dll
 C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\System.Net.Http.Formatting.dll
 C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\System.Web.Helpers.dll
 C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\System.Web.Http.dll

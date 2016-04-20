@@ -51,6 +51,39 @@ namespace webapi.DB
             return listUsers.FirstOrDefault();
         }
 
+        public webapi.Models.User GetUserFromEmail(string email)
+        {
+            List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
+            con.Open();
+            string sql = "SELECT * FROM public.user WHERE public.user.email = @email";
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@email", email);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            dt.Reset();
+            dt.Load(dr);
+            List<DataRow> list = dt.AsEnumerable().ToList();
+            foreach (DataRow x in list)
+            {
+                webapi.Models.User user = new webapi.Models.User()
+                {
+                    ID = x.Field<int>("id"),
+                    Firstname = x.Field<string>("firstname"),
+                    Surname = x.Field<string>("surname"),
+                    Address = x.Field<string>("address"),
+                    City = x.Field<string>("city"),
+                    ZipCode = x.Field<int>("zipcode"),
+                    PhoneNumber = x.Field<int>("phonenumber"),
+                    Email = x.Field<string>("email"),
+                    password = x.Field<string>("passwordhash"),
+                    ActivityList = dbActivity.GetAllActivityForUser(x.Field<int>("id"))
+                };
+
+                listUsers.Add(user);
+            }
+            con.Close();
+            return listUsers.FirstOrDefault();
+        }
+
         public List<webapi.Models.User> GetUsers()
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();

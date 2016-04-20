@@ -11,13 +11,13 @@ namespace webapi.Models
     public class Point
     {
         [DataMember]
-        public int ID { get; set; }
+        public long ID { get; set; }
         [DataMember]
         public NpgsqlPoint Coords { get; set; }
         [DataMember]
         public int RouteID { get; set; }
 
-        public Point(int ID, NpgsqlPoint p, int RouteID)
+        public Point(long ID, NpgsqlPoint p, int RouteID)
         {
             this.ID = ID;
             this.Coords = p;
