@@ -25,7 +25,25 @@ namespace webapi.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
         
+        [HttpPost]
+        public ActionResult Create(User u)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View("Create", u);
+            }
+
+            //
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult Login(string email, string password)
         {

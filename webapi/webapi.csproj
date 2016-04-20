@@ -230,6 +230,7 @@
     <Content Include="Views\Activities\View.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
