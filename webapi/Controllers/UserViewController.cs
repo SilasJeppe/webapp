@@ -103,7 +103,7 @@ namespace webapi.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync("api/User?action=").Result;
+            HttpResponseMessage response = client.GetAsync("api/User").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -121,11 +121,12 @@ namespace webapi.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync("api/User/?=id").Result;
+            string str = "api/User/" + id;
+            HttpResponseMessage response = client.GetAsync(str).Result;
 
             if (response.IsSuccessStatusCode)
             {
-                user = response.Content.ReadAsAsync<IEnumerable<User>>().Result.Where(x => x.ID == id).SingleOrDefault();
+                user = response.Content.ReadAsAsync<User>().Result;
             }
             return user;
         }
