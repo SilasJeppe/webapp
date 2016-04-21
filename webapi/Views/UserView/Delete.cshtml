@@ -1,0 +1,90 @@
+﻿@model webapi.Models.User
+
+@{
+    ViewBag.Title = "Delete";
+    webapi.Models.User user = ViewBag.User;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => user.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => user.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => user.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => user.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => user.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => user.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => user.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => user.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => user.password)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
