@@ -54,6 +54,7 @@ namespace webapi.Controllers
         // GET: UserView/Edit/5
         public ActionResult Edit(int id)
         {
+
             return View();
         }
 
@@ -76,16 +77,18 @@ namespace webapi.Controllers
         // GET: UserView/Delete/5
         public ActionResult Delete(int id)
         {
+            User user = GetUser(id);
+            ViewBag.User = user;
             return View();
         }
 
         // POST: UserView/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(User u)
         {
             try
             {
-                // TODO: Add delete logic here
+                DeleteUser(u.ID);
 
                 return RedirectToAction("Index");
             }
@@ -136,18 +139,20 @@ namespace webapi.Controllers
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:6617/");
-
-            //client.DefaultRequestHeaders.Accept.Add(
-            //    new MediaTypeWithQualityHeaderValue("application/json"));
-
-           // var response = client.PostAsJsonAsync("api/User", u);
-
-            // .ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
-
-            //HttpResponseMessage response = client.PostAsJsonAsync("api/User", u).Result;
-            // client.PostAsJsonAsync()  .PostAsync("api/User").Result;
-
+            
             var res = client.PostAsJsonAsync("api/User", u).Result;
         }
+
+        private void DeleteUser(int id)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:6617/");
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string str = "api/User/" + id;
+            var res = client.DeleteAsync(str).Result;
+        }
+
     }
 }

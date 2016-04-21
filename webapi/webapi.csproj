@@ -235,6 +235,7 @@
     <Content Include="Views\UserView\Index.cshtml" />
     <Content Include="Views\UserView\Details.cshtml" />
     <Content Include="Views\UserView\Create.cshtml" />
+    <Content Include="Views\UserView\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
