@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using webapi.Models;
@@ -36,11 +37,11 @@ namespace webapi.Controllers
 
         // POST: UserView/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(User user)
         {
             try
             {
-                // TODO: Add insert logic here
+                PostUser(user);
 
                 return RedirectToAction("Index");
             }
@@ -129,6 +130,24 @@ namespace webapi.Controllers
                 user = response.Content.ReadAsAsync<User>().Result;
             }
             return user;
+        }
+
+        private void PostUser(User u)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:6617/");
+
+            //client.DefaultRequestHeaders.Accept.Add(
+            //    new MediaTypeWithQualityHeaderValue("application/json"));
+
+           // var response = client.PostAsJsonAsync("api/User", u);
+
+            // .ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
+
+            //HttpResponseMessage response = client.PostAsJsonAsync("api/User", u).Result;
+            // client.PostAsJsonAsync()  .PostAsync("api/User").Result;
+
+            var res = client.PostAsJsonAsync("api/User", u).Result;
         }
     }
 }
