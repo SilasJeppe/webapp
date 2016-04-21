@@ -139,8 +139,8 @@ namespace webapi.DB
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);
             int i = cmd.ExecuteNonQuery();
-            dbActivity.DeleteActivity(id);
             con.Close();
+            dbActivity.DeleteActivity(id);
         }
 
         public void UpdateUser(string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
