@@ -12,6 +12,8 @@ namespace webapi.Controllers
 {
     public class UserViewController : Controller
     {
+        private string url { get; set; }
+
         // GET: UserView
         public ActionResult Index()
         {
@@ -101,7 +103,8 @@ namespace webapi.Controllers
         private List<User> GetData()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:6617/");
+            url = Request.Url.AbsoluteUri;
+            client.BaseAddress = new Uri(url);
 
             List<User> users = new List<User>();
             client.DefaultRequestHeaders.Accept.Add(
@@ -119,7 +122,8 @@ namespace webapi.Controllers
         private User GetUser(int id)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:6617/");
+            url = "http://" + Request.Url.Authority;
+            client.BaseAddress = new Uri(url);
 
             User user = new User();
             client.DefaultRequestHeaders.Accept.Add(
@@ -138,15 +142,18 @@ namespace webapi.Controllers
         private void PostUser(User u)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:6617/");
-            
+            url = "http://" + Request.Url.Authority;
+            client.BaseAddress = new Uri(url);
+
             var res = client.PostAsJsonAsync("api/User", u).Result;
         }
 
         private void DeleteUser(int id)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:6617/");
+            url = "http://" + Request.Url.Authority;
+            client.BaseAddress = new Uri(url);
+
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 

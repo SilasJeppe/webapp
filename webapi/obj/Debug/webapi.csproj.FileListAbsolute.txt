@@ -165,3 +165,16 @@ C:\Users\Serec\Source\Repos\webapp\webapi\bin\Antlr3.Runtime.pdb
 C:\Users\Serec\Source\Repos\webapp\webapi\obj\Debug\webapi.csprojResolveAssemblyReference.cache
 C:\Users\Serec\Source\Repos\webapp\webapi\obj\Debug\webapi.dll
 C:\Users\Serec\Source\Repos\webapp\webapi\obj\Debug\webapi.pdb
+C:\Users\soren\Source\Repos\webapp\webapi\bin\ApplicationInsights.config
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.Web.dll
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.ApplicationInsights.dll
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.Web.xml
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.ApplicationInsights.xml

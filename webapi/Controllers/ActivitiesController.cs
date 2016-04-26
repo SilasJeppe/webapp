@@ -12,6 +12,7 @@ namespace webapi.Controllers
 {
     public class ActivitiesController : Controller
     {
+        private string url { get; set; }
         //private ActivityController aCtr = new ActivityController();
         // GET: Activities
         public ActionResult Index()
@@ -26,7 +27,8 @@ namespace webapi.Controllers
         private List<Activity> GetData()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:6617/");
+            url = Request.Url.AbsoluteUri;
+            client.BaseAddress = new Uri(url);
 
             List<Activity> activities = new List<Activity>();
             client.DefaultRequestHeaders.Accept.Add(
