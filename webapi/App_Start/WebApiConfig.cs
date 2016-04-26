@@ -14,6 +14,8 @@ namespace webapi
         {
             // Web API configuration and services
 
+            GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
