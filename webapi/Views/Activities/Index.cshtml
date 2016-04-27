@@ -1,5 +1,5 @@
 ﻿@model webapi.Models.Activity
-//@using Jmelosegui.Mvc.GoogleMap
+@using Jmelosegui.Mvc.GoogleMap
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<webapi.Models.Activity> list = ViewBag.List;
@@ -29,18 +29,7 @@
 
 </table>
 
-<script>
-    function Redirect(id) {
-        //var latlng = new google.maps.LatLng(57.048820, 9.921747 );
-        var latlng = { lat: 57.048820, lng: 9.929000 };
-        var marker = new google.maps.Marker({
-            position: latlng,
-            map: map,
-            title: 'Hans'
-        });
-       alert('hest');
-    } 
-</script>
+
 
 
 
@@ -76,6 +65,20 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
             async defer>
+    </script>
+
+    <script>
+    function Redirect(id) {
+        //var latlng = new google.maps.LatLng(57.048820, 9.921747 );
+        var latlng = { lat: 57.048820, lng: 9.929000 };
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title: 'Hans'
+        });
+        google.maps.event.trigger(map, 'resize');
+        //alert('hest');
+    }
     </script>
 </div>
 
