@@ -1,5 +1,5 @@
 ﻿@model webapi.Models.Activity
-@using Jmelosegui.Mvc.GoogleMap
+//@using Jmelosegui.Mvc.GoogleMap
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<webapi.Models.Activity> list = ViewBag.List;
@@ -16,53 +16,67 @@
         <th>Turens længde</th>
         <th>Oprettet af</th>
     </tr>
+
     @foreach (var item in list)
     {
-        <tr>
+        <tr onclick="Redirect(@item.ID);">
             <td>@item.Name</td>
             <td>@item.Description</td>
             <td>@item.Distance</td>
             <td>@item.UserID</td>
         </tr>
     }
+
 </table>
 
+<script>
+    function Redirect(id) {
+        //var latlng = new google.maps.LatLng(57.048820, 9.921747 );
+        var latlng = { lat: 57.048820, lng: 9.929000 };
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title: 'Hans'
+        });
+       alert('hest');
+    } 
+</script>
 
-<div class="row">
-    <div class="col-md-12">
-        @(Html.GoogleMap()
-              .Name("map")
-              .Height(500)
-              .Width(500)
-              .FitToMarkersBounds(true)
-              .Markers(m =>
-              {
-                  foreach (webapi.Models.Point p in act.Route.PointList)
+
+
+
+
+
+@*<div class="row">
+        <div class="col-md-12">
+            @(Html.GoogleMap()
+                  .Name("map")
+                  .Height(500)
+                  .Width(500)
+                  .FitToMarkersBounds(true)
+                  .Markers(m =>
                   {
-                      m.Add().Longitude(p.Coords.X).Latitude(p.Coords.Y);
-                  }
-              })
-        )
+                      foreach (webapi.Models.Point p in act.Route.PointList)
+                      {
+                          m.Add().Longitude(p.Coords.X).Latitude(p.Coords.Y);
+                      }
+                  })
+            )
+
+        </div>
     </div>
-</div>
 
-@section scripts
-{
-    @(Html.GoogleMap().ScriptRegistrar())
-}
+    @section scripts
+    {
+        @(Html.GoogleMap().ScriptRegistrar())
+    }*@
 
 
-@*<div id="map"></div>
-    <script>
-          function initMap() {
-            var mapDiv = document.getElementById('map');
-            var map = new google.maps.Map(mapDiv, {
-              center: {lat: 44.540, lng: -78.546},
-              zoom: 8
-            });
-          }
+<div id="map">
+
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+            async defer>
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js"
-            async defer></script>*@
+</div>
 
 
