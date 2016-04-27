@@ -1,7 +1,9 @@
 ﻿@model webapi.Models.Activity
+@using Jmelosegui.Mvc.GoogleMap
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<webapi.Models.Activity> list = ViewBag.List;
+    webapi.Models.Activity act = list.LastOrDefault();
 }
 
 <h2>Activity</h2>
@@ -25,17 +27,42 @@
     }
 </table>
 
-<div id="map"></div>
-<script>
-      function initMap() {
-        var mapDiv = document.getElementById('map');
-        var map = new google.maps.Map(mapDiv, {
-          center: {lat: 44.540, lng: -78.546},
-          zoom: 8
-        });
-      }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js"
-        async defer></script>
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.GoogleMap()
+              .Name("map")
+              .Height(500)
+              .Width(500)
+              .FitToMarkersBounds(true)
+              .Markers(m =>
+              {
+                  foreach (webapi.Models.Point p in act.Route.PointList)
+                  {
+                      m.Add().Longitude(p.Coords.X).Latitude(p.Coords.Y);
+                  }
+              })
+        )
+    </div>
+</div>
+
+@section scripts
+{
+    @(Html.GoogleMap().ScriptRegistrar())
+}
+
+
+@*<div id="map"></div>
+    <script>
+          function initMap() {
+            var mapDiv = document.getElementById('map');
+            var map = new google.maps.Map(mapDiv, {
+              center: {lat: 44.540, lng: -78.546},
+              zoom: 8
+            });
+          }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js"
+            async defer></script>*@
 
 

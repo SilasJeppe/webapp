@@ -178,3 +178,4 @@ C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.ServerTelemetryChanne
 C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.Web.xml
 C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.ApplicationInsights.xml
+C:\Users\soren\Source\Repos\webapp\webapi\bin\Jmelosegui.Mvc.GoogleMap.dll
