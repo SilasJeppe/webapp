@@ -17,22 +17,29 @@ function initMap() {
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
-        title: 'Nissemand'
     });
     markers.push(marker); 
 }
 
-function Redirect(id) {
-    var latlng = new google.maps.LatLng(57.048820, 9.929000);
-    //var latlng = { lat: 57.048820, lng: 9.929000 };
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        title: 'Hans'
-    });
-    markers.push(marker);
-    //google.maps.event.trigger(map, 'resize');
-    //alert(id);
+function Redirect(array) {
+    clearOverlay();  //delete old markers
+    for (var i = 0; i < array.length; i++) {
+        var latlng = new google.maps.LatLng(array[i].Coords.Y, array[i].Coords.X);
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+        });
+        markers.push(marker);
+    }
+
+    google.maps.event.trigger(map, 'resize');
+    //alert("hest");
+
+    //stuff thats supposed to happen
+    
+    setMapOnAll(map); //add markers to map
+    showMarkers(); // show markers on map
+
 }
 
 
@@ -43,7 +50,6 @@ function addMarkers() {
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
-        title: 'Hans'
     });
     markers.push(marker);
     //google.maps.event.trigger(map, 'resize');

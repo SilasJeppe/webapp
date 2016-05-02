@@ -1,9 +1,10 @@
 ﻿@model webapi.Models.Activity
 @using Jmelosegui.Mvc.GoogleMap
+@using System.Web.Script.Serialization
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<webapi.Models.Activity> list = ViewBag.List;
-    webapi.Models.Activity act = list.LastOrDefault();
+    JavaScriptSerializer ser = new JavaScriptSerializer();
 }
 
 <h2>Activity</h2>
@@ -16,10 +17,12 @@
         <th>Turens længde</th>
         <th>Oprettet af</th>
     </tr>
+   @*@{ var yourJavaScriptArray = @Html.Raw(Json.Serialize(Model.Route.PointList }*@
+    @*var array = <% = new JavaScriptSerializer().Serialize(Model.Route.PointList);%>;*@
 
     @foreach (var item in list)
     {
-        <tr onclick="Redirect(@item.ID);">
+        <tr onclick="Redirect(@ser.Serialize(item.Route.PointList))">
             <td>@item.Name</td>
             <td>@item.Description</td>
             <td>@item.Distance</td>
@@ -28,6 +31,9 @@
     }
 
 </table>
+
+
+
 
 <button onclick="initMap()">WOOT</button>
 <button onclick="clearOverlay()">clear</button>
