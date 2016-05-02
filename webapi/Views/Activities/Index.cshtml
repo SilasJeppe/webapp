@@ -22,7 +22,7 @@
 
     @foreach (var item in list)
     {
-        <tr onclick="Redirect(@ser.Serialize(item.Route.PointList))">
+        <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
             <td>@item.Name</td>
             <td>@item.Description</td>
             <td>@item.Distance</td>

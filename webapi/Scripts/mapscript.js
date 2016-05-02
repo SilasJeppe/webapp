@@ -5,7 +5,7 @@ function initMap() {
     var mapDiv = document.getElementById('map');
     var mapOptions = {
         center: { lat: 57.048820, lng: 9.921747 },
-        zoom: 13,
+        zoom: 20,
         streetViewControl: false,
         mapTypeControl: false,
         mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -21,7 +21,7 @@ function initMap() {
     markers.push(marker); 
 }
 
-function Redirect(array) {
+function AddMarkers(array) {
     clearOverlay();  //delete old markers
     for (var i = 0; i < array.length; i++) {
         var latlng = new google.maps.LatLng(array[i].Coords.Y, array[i].Coords.X);
@@ -31,29 +31,9 @@ function Redirect(array) {
         });
         markers.push(marker);
     }
-
-    google.maps.event.trigger(map, 'resize');
     //alert("hest");
-
-    //stuff thats supposed to happen
-    
     setMapOnAll(map); //add markers to map
     showMarkers(); // show markers on map
-
-}
-
-
-
-function addMarkers() {
-    //var latlng = new google.maps.LatLng(57.048820, 9.921747 );
-    var latlng = { lat: 57.048820, lng: 9.929000 };
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-    });
-    markers.push(marker);
-    //google.maps.event.trigger(map, 'resize');
-    //alert('hest');
 }
 
 function clearOverlay()
