@@ -179,3 +179,17 @@ C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.Web.xml
 C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\soren\Source\Repos\webapp\webapi\bin\Microsoft.ApplicationInsights.xml
 C:\Users\soren\Source\Repos\webapp\webapi\bin\Jmelosegui.Mvc.GoogleMap.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\ApplicationInsights.config
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Jmelosegui.Mvc.GoogleMap.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.Web.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.ApplicationInsights.dll
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.Web.xml
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\SilasJC\Desktop\UCN\Specialisering\webapp\webapi\bin\Microsoft.ApplicationInsights.xml

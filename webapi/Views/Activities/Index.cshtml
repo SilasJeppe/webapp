@@ -10,33 +10,36 @@
 <h2>Activity</h2>
 
 
-<table class="t1">
-    <tr>
-        <th>Navn</th>
-        <th>Beskrivelse</th>
-        <th>Turens længde</th>
-        <th>Oprettet af</th>
-    </tr>
-   @*@{ var yourJavaScriptArray = @Html.Raw(Json.Serialize(Model.Route.PointList }*@
-    @*var array = <% = new JavaScriptSerializer().Serialize(Model.Route.PointList);%>;*@
-
-    @foreach (var item in list)
-    {
-        <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
-            <td>@item.Name</td>
-            <td>@item.Description</td>
-            <td>@item.Distance</td>
-            <td>@item.UserID</td>
+<table class="table text-left table-hover" style="width: 50%">
+    <thead>
+        <tr>
+            <th class="text-left">Navn</th>
+            <th class="text-left">Beskrivelse</th>
+            <th class="text-left">Turens længde</th>
+            <th class="text-left">Oprettet af</th>
         </tr>
-    }
+    </thead>
+    @*@{ var yourJavaScriptArray = @Html.Raw(Json.Serialize(Model.Route.PointList }*@
+    @*var array = <% = new JavaScriptSerializer().Serialize(Model.Route.PointList);%>;*@
+    <tbody>
+        @foreach (var item in list)
+        {
+            <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Distance</td>
+                <td>@item.UserID</td>
+            </tr>
+        }
+    </tbody>
 
 </table>
 
 
 
 
-<button onclick="initMap()">WOOT</button>
-<button onclick="clearOverlay()">clear</button>
+@*<button onclick="initMap()">WOOT</button>
+<button onclick="clearOverlay()">clear</button>*@
 
 
 @*<div class="row">
