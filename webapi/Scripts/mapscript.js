@@ -1,7 +1,10 @@
-﻿var map;
+﻿//Global fields used in the scripts
+var map;
+//array for the markers. Used when drawing the points to the map. And emptied when removing the markers from the map
 var markers = [];
-var bounds = new google.maps.LatLngBounds();
+//var bounds = new google.maps.LatLngBounds();
 
+//Creating the map with the given mapOptions.
 function initMap() {
     var mapDiv = document.getElementById('map');
     var mapOptions = {
@@ -15,6 +18,7 @@ function initMap() {
     map = new google.maps.Map(mapDiv, mapOptions);
 }
 
+//This function adds the marks to an array and draws all the array to the map.
 function AddMarkers(array) {
     clearOverlay();  //delete old markers
     var latlngList = [];
@@ -44,6 +48,7 @@ function AddMarkers(array) {
     //map.panToBounds(bounds);
 }
 
+//This function is clearing the map, using another method to null the array and clear map
 function clearOverlay() {
     clearMarkers();
     deleteMarkers();
