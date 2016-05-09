@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -14,7 +15,7 @@ namespace webapi.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            List<User> list = GetData();
+            List<User> list = GetUsers();
             ViewBag.List = list;
             ViewBag.Title = "Brugere";
             return View();
@@ -31,11 +32,11 @@ namespace webapi.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult Create(User u)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("Create", u);
             }
@@ -47,17 +48,29 @@ namespace webapi.Controllers
         [HttpPost]
         public ActionResult Login(string email, string password)
         {
-            User user = CheckUser(email);
-
-            if(user == null)
+            if (ModelState.IsValid)
             {
-                //USER
+                User user = CheckUser(email, password);
+
+                if (user == null || user.Email != email)
+                {
+                    return new HttpStatusCodeResult(404, "User not found!");
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(user);
+                    var userCookie = new HttpCookie("user", json);
+                    userCookie.Expires.AddDays(365);
+                    HttpContext.Response.Cookies.Add(userCookie);
+
+                    return RedirectToActionPermanent("Index");
+                }
+                ViewBag.User = user;
             }
-            ViewBag.User = user;
-            return View(); // med cookies
+            return View("UserLog");
         }
 
-        private User CheckUser(string email)
+        private User CheckUser(string email, string password)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:6617/");
@@ -66,17 +79,17 @@ namespace webapi.Controllers
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync("api/User").Result;
+            HttpResponseMessage response = client.GetAsync("api/user?email=" + email).Result;
 
             if (response.IsSuccessStatusCode)
             {
                 user = response.Content.ReadAsAsync<User>().Result;
             }
-            
+
             return user;
         }
 
-        private List<User> GetData()
+        private List<User> GetUsers()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:6617/");
