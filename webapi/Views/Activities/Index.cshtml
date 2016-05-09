@@ -9,31 +9,31 @@
 
 <h2>Activity</h2>
 
-
-<table class="table text-left table-hover" style="width: 50%">
-    <thead>
-        <tr>
-            <th class="text-left">Navn</th>
-            <th class="text-left">Beskrivelse</th>
-            <th class="text-left">Turens længde</th>
-            <th class="text-left">Oprettet af</th>
-        </tr>
-    </thead>
-    @*@{ var yourJavaScriptArray = @Html.Raw(Json.Serialize(Model.Route.PointList }*@
-    @*var array = <% = new JavaScriptSerializer().Serialize(Model.Route.PointList);%>;*@
-    <tbody>
-        @foreach (var item in list)
-        {
-            <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
-                <td>@item.Name</td>
-                <td>@item.Description</td>
-                <td>@item.Distance</td>
-                <td>@item.UserID</td>
+<div id="table" class="col-1 col-md-6">
+    <table class="table text-left table-hover">
+        <thead>
+            <tr>
+                <th class="text-left">Navn</th>
+                <th class="text-left">Beskrivelse</th>
+                <th class="text-left">Turens længde</th>
+                <th class="text-left">Oprettet af</th>
             </tr>
-        }
-    </tbody>
+        </thead>
 
-</table>
+        <tbody>
+            @foreach (var item in list)
+            {
+                <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Distance</td>
+                    <td>@item.UserID</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
 
 
 
@@ -67,10 +67,9 @@
     }*@
 
 
-<div id="map">
+<div class="col-1" id="map">
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
             async defer>
     </script>
 </div>
-
 
