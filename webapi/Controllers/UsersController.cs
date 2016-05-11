@@ -48,9 +48,10 @@ namespace webapi.Controllers
         [HttpPost]
         public ActionResult Login(string email, string password)
         {
+            User user;
             if (ModelState.IsValid)
             {
-                User user = CheckUser(email, password);
+                user = CheckUser(email, password);
 
                 if (user == null || user.Email != email)
                 {
@@ -61,13 +62,28 @@ namespace webapi.Controllers
                     var json = JsonConvert.SerializeObject(user);
                     var userCookie = new HttpCookie("user", json);
                     userCookie.Expires.AddDays(365);
-                    HttpContext.Response.Cookies.Add(userCookie);
+                    Response.SetCookie(userCookie);
+                    Response.Cookies.Add(userCookie);
 
-                    return RedirectToActionPermanent("Index");
+                    return RedirectToActionPermanent("Index", "Home");
                 }
-                ViewBag.User = user;
             }
-            return View("UserLog");
+            return View("Login");
+        }
+
+        public ActionResult Logout()
+        {
+            if(Request.Cookies["user"] != null)
+            {
+                var user = new HttpCookie("user")
+                {
+                    Expires = DateTime.Now.AddDays(-1),
+                    Value = null
+                };
+                Response.SetCookie(user);
+                //Response.Cookies.Add(user);
+            }
+            return RedirectToActionPermanent("Index", "Home");
         }
 
         private User CheckUser(string email, string password)

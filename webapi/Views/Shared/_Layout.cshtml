@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model webapi.Models.User
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,6 +7,9 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{
+        var userInCookie = Request.Cookies["user"];
+    }
 </head>
 <body>
     @*Navigation bar at the top of the screen*@
@@ -29,8 +33,20 @@
                 </ul>
                 @*Submenu for the navigationbar, giving the funtionality to login og creating a user*@
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Opret bruger", "Create", "Users", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Log ind", "Login", "Users", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    
+                    @if (userInCookie != null)
+                    {
+                        //TODO - skal flyttes til en controller!
+                        var Json = new System.Web.Script.Serialization.JavaScriptSerializer();
+                        var data = Json.Deserialize<webapi.Models.User>(userInCookie.Value);
+                        <li><a href="#">@data.Email</a></li>
+                        <li><a href="@Url.Action("Logout", "Users")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Opret bruger", "Create", "Users", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log ind", "Login", "Users", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    }
                 </ul>
             </div>
         </div>
