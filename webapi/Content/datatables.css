@@ -2,33 +2,37 @@
     border-collapse: collapse;
     width: 50%;
 }
-table.t1 th {
-    background-color:#585858 ;
-    height: 50px;
-    color: white;
-    text-align:center;
-    border-width: 1px;
-    border-style: solid;
-    border-color: BLACK;
-}
-table.t1 tr:hover td {
-    cursor: pointer;
-    background-color: #088A68 ;
-}
-table.t1 td {
-    border-width: 1px;
-    border-style: solid;
-    border-color: BLACK;
-    vertical-align:bottom;
-}
-th {
+
+    table.t1 th {
+        background-color: #585858;
+        height: 50px;
+        color: white;
+        text-align: center;
+        border-width: 1px;
+        border-style: solid;
+        border-color: BLACK;
+    }
+
+    table.t1 tr:hover td {
+        cursor: pointer;
+        background-color: #088A68;
+    }
+
+    table.t1 td {
+        border-width: 1px;
+        border-style: solid;
+        border-color: BLACK;
+        vertical-align: bottom;
+    }
+
+/*th {
     background-color: #585858;
     height: 50px;
     color: white;
-    text-align:center;
-}
+    text-align: center;
+}*/
 
-td{
+td {
     vertical-align: bottom;
 }
 
@@ -36,4 +40,3 @@ table.t2 {
     border-collapse: collapse;
     width: 30%;
 }
-

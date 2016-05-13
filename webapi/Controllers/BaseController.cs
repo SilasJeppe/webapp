@@ -5,16 +5,16 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
+using webapi.Models;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using webapi.Models;
 
 namespace webapi.Controllers
 {
-    public class ValuesController : BaseController
+    public class BaseController : Controller
     {
-        public ActionResult Index()
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var userCookie = Request.Cookies["user"];
             webapi.Models.User user = null;
@@ -23,7 +23,8 @@ namespace webapi.Controllers
                 JavaScriptSerializer Json = new JavaScriptSerializer();
                 user = Json.Deserialize<webapi.Models.User>(userCookie.Value);
             }
-            return PartialView(user);
+            ViewBag.User = user;
+            base.OnActionExecuting(filterContext);
         }
     }
 }

@@ -1,15 +1,18 @@
 ﻿@model webapi.Models.User
+@using System.Web.Script.Serialization
 
 @{
     ViewBag.Title = "Details";
     webapi.Models.User user = ViewBag.User;
+    var list = user.ActivityList;
+    JavaScriptSerializer ser = new JavaScriptSerializer();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detaljer</h2>
 
 <div>
-    <h4>User</h4>
+    <h4>Bruger</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -71,6 +74,28 @@
         
     </dl>
 </div>
+<table class="table text-left table-hover" style="width: 50%">
+    <thead>
+        <tr>
+            <th class="text-left">Navn</th>
+            <th class="text-left">Beskrivelse</th>
+            <th class="text-left">Turens længde</th>
+            <th class="text-left">Oprettet af</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in list)
+        {
+            <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Distance</td>
+                <td>@item.UserID</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = user.ID }) |
     @Html.ActionLink("Back to List", "Index")
