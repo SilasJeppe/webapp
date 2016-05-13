@@ -8,7 +8,7 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {

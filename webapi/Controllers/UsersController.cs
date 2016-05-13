@@ -7,10 +7,11 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using webapi.Models;
+using System.Web.Script.Serialization;
 
 namespace webapi.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         // GET: Users
         public ActionResult Index()

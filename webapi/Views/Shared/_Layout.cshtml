@@ -1,5 +1,4 @@
-﻿@model webapi.Models.User
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -33,13 +32,10 @@
                 </ul>
                 @*Submenu for the navigationbar, giving the funtionality to login og creating a user*@
                 <ul class="nav navbar-nav navbar-right">
-                    
+
                     @if (userInCookie != null)
                     {
-                        //TODO - skal flyttes til en controller!
-                        var Json = new System.Web.Script.Serialization.JavaScriptSerializer();
-                        var data = Json.Deserialize<webapi.Models.User>(userInCookie.Value);
-                        <li><a href="#">@data.Email</a></li>
+                        <li><a href="#">@ViewBag.User.Email</a></li>
                         <li><a href="@Url.Action("Logout", "Users")">Logout</a></li>
                     }
                     else
@@ -56,7 +52,7 @@
         <hr />
         @*Footer*@
         <footer class="navbar-fixed-bottom text-center">
-            <p>&copy; @DateTime.Now.Year - All your base are belong to us!</p>
+            <p>&copy; @DateTime.Now.Year - RunnerApp, Specialiseringsgruppe 42</p>
         </footer>
     </div>
 

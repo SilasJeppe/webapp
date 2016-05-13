@@ -17,6 +17,7 @@ namespace webapi.Models
         [DataMember]
         public int RouteID { get; set; }
 
+        //This field(Point) contains the information from the map marker.
         public Point(long ID, NpgsqlPoint p, int RouteID)
         {
             this.ID = ID;

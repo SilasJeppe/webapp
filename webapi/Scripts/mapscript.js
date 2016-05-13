@@ -21,10 +21,9 @@ function initMap() {
 //This function adds the marks to an array and draws all the array to the map.
 function AddMarkers(array) {
     clearOverlay();  //delete old markers
-    var latlngList = [];
+    //for-loop that iterates through the parameter-array and adds the markes from the array to the map. 
     for (var i = 0; i < array.length; i++) {
         var latlng = new google.maps.LatLng(array[i].Coords.Y, array[i].Coords.X);
-        latlngList.push(latlng);
         var marker = new google.maps.Marker({
             position: latlng,
             map: map
@@ -41,9 +40,6 @@ function AddMarkers(array) {
     
     setMapOnAll(map); //add markers to map
     showMarkers(); // show markers on map
-    map.fitBounds(bounds);
-    
-    alert(map.getBounds());
     
     //map.panToBounds(bounds);
 }

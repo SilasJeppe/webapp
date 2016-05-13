@@ -10,7 +10,7 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    public class ActivitiesController : Controller
+    public class ActivitiesController : BaseController
     {
         private string url { get; set; }
         //private ActivityController aCtr = new ActivityController();
