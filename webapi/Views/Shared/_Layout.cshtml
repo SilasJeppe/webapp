@@ -6,8 +6,12 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{
+        var userInCookie = Request.Cookies["user"];
+    }
 </head>
 <body>
+    @*Navigation bar at the top of the screen*@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -16,17 +20,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Hokus Pokus", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @*Link to the frontpage*@
+                @Html.ActionLink("@", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
+                @*Submenu for the navigationbar for some of the functionality*@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Ruter", "Index", "Activities", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Brugere", "Index", "UserView", new { area = "" }, null)</li>
 
                 </ul>
+                @*Submenu for the navigationbar, giving the funtionality to login og creating a user*@
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Opret bruger", "Create", "Users", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Log ind", "Login", "Users", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
+                    @if (userInCookie != null)
+                    {
+                        <li><a href="#">@ViewBag.User.Email</a></li>
+                        <li><a href="@Url.Action("Logout", "Users")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Opret bruger", "Create", "Users", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log ind", "Login", "Users", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    }
                 </ul>
             </div>
         </div>
@@ -34,11 +50,13 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - All your base are belong to us!</p>
+        @*Footer*@
+        <footer class="navbar-fixed-bottom text-center">
+            <p>&copy; @DateTime.Now.Year - RunnerApp, Specialiseringsgruppe 42</p>
         </footer>
     </div>
 
+    @*Rendering scripts and bootstrap for layout*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

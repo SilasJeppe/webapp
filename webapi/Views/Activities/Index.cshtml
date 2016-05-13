@@ -1,26 +1,45 @@
 ﻿@model webapi.Models.Activity
+@using System.Web.Script.Serialization
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<webapi.Models.Activity> list = ViewBag.List;
+    JavaScriptSerializer ser = new JavaScriptSerializer();
 }
 
 <h2>Activity</h2>
 
+@*Creating the table in a div to ensure the table placement in the bootstrap gridview.*@
+<div id="table" class="col-1 col-md-6">
+    @*Creating a table with the table and hover-css motifications*@
+    <table class="table text-left table-hover">
+        <thead>
+            <tr>
+                <th class="text-left">Navn</th>
+                <th class="text-left">Beskrivelse</th>
+                <th class="text-left">Turens længde</th>
+                <th class="text-left">Oprettet af</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*Looping through the list of activities and adding the items to the table.*@
+            @foreach (var item in list)
+            {
+                <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Distance</td>
+                    <td>@item.UserID</td>
+                </tr>
+            }
+        </tbody>
 
-<table class="t1">
-    <tr>
-        <th>Navn</th>
-        <th>Beskrivelse</th>
-        <th>Turens længde</th>
-        <th>Oprettet af</th>
-    </tr>
-    @foreach (var item in list)
-    {
-        <tr>
-            <td>@item.Name</td>
-            <td>@item.Description</td>
-            <td>@item.Distance</td>
-            <td>@item.UserID</td>
-        </tr>
-    }
-</table>
+    </table>
+</div>
+
+@*A div to run a script(our initMap script) on googlemaps-api to create the map with the specific options.*@
+<div class="col-1" id="map">
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+            async defer>
+    </script>
+</div>
+

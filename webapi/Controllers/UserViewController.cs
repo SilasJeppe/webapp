@@ -10,7 +10,7 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    public class UserViewController : Controller
+    public class UserViewController : BaseController
     {
         private string url { get; set; }
 
