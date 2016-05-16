@@ -1,8 +1,7 @@
-﻿using NpgsqlTypes;
-using System;
+﻿//Class for connection the Point class to the database
+using NpgsqlTypes;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Npgsql;
 using System.Data;
 
@@ -18,6 +17,8 @@ namespace webapi.DB
         {
             con = DBConnection.GetInstance().GetConnection();
         }
+
+        //method that inserts a list of Points in the database
         public void InsertPoints(List<webapi.Models.Point> points)
         {
             foreach (webapi.Models.Point p in points)
@@ -31,6 +32,7 @@ namespace webapi.DB
             }
         }
 
+        //Method that gets a list of Points based on a Route ID
         public List<webapi.Models.Point> GetPointsByRouteID(int id)
         {
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
