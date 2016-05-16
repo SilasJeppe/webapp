@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿//Class for connection the Activity class to the database
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -54,7 +55,7 @@ namespace webapi.DB
             return listActivity.FirstOrDefault();
         }
 
-
+        //Gets all activities from database
         public List<webapi.Models.Activity> GetAllActivity()
         {
             con.Open();
@@ -80,13 +81,13 @@ namespace webapi.DB
                     UserID = x.Field<int>("userid"),
                     Route = dbRoute.GetRouteByActivityID(x.Field<int>("id"))
                 };
-
                 listActivity.Add(activity);
             }
             con.Close();
             return listActivity;
         }
 
+        //Method that get all activities for a User given the User ID
         public List<webapi.Models.Activity> GetAllActivityForUser(int id)
         {
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
@@ -112,12 +113,12 @@ namespace webapi.DB
                     UserID = x.Field<int>("userid"),
                     Route = dbRoute.GetRouteByActivityID(x.Field<int>("id"))
                 };
-
                 listActivity.Add(activity);
             }
             return listActivity;
         }
 
+        //Method that inserts an Activity given correct input
         public void InsertActivity(Activity a)
         {
             con.Open();
@@ -137,6 +138,7 @@ namespace webapi.DB
             con.Close();
         }
 
+        //Deletes an activity and the Route and Points 
         public void DeleteActivity(int id)
         {
             con.Open();
@@ -147,6 +149,7 @@ namespace webapi.DB
             con.Close();
         }
 
+        //Updates an Activity - NOT FULLY IMPLEMENTET
         public void UpdateActivity(int id, string name, string description, double distance, DateTime date, DateTime time, string startaddress, string endaddress, int userid)
         {
             con.Open();
