@@ -150,7 +150,8 @@ namespace webapi.Controllers
         private User CheckUser(string email)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:6617/");
+            url = "http://" + Request.Url.Authority;
+            client.BaseAddress = new Uri(url);
 
             User user = null;
             client.DefaultRequestHeaders.Accept.Add(
@@ -168,7 +169,8 @@ namespace webapi.Controllers
         private List<User> GetUsers()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:6617/");
+            url = "http://" + Request.Url.Authority;
+            client.BaseAddress = new Uri(url);
 
             List<User> users = new List<User>();
             client.DefaultRequestHeaders.Accept.Add(
@@ -186,7 +188,7 @@ namespace webapi.Controllers
         private List<User> GetData()
         {
             HttpClient client = new HttpClient();
-            url = Request.Url.AbsoluteUri;
+            url = "http://" + Request.Url.Authority;
             client.BaseAddress = new Uri(url);
 
             List<User> users = new List<User>();
