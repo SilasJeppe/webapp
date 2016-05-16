@@ -52,13 +52,8 @@ namespace webapi.Controllers
             User user;
             if (ModelState.IsValid)
             {
-                user = CheckUser(email, password);
-
-                if (user == null || user.Email != email)
-                {
-                    return new HttpStatusCodeResult(404, "User not found!");
-                }
-                else
+                user = CheckUser(email);
+                if(user != null && webapi.BLL.Hash.ValidatePassword(password, user.password))
                 {
                     var json = JsonConvert.SerializeObject(user);
                     var userCookie = new HttpCookie("user", json);
@@ -68,13 +63,17 @@ namespace webapi.Controllers
 
                     return RedirectToActionPermanent("Index", "Home");
                 }
+                else
+                {
+                    return new HttpStatusCodeResult(404, "User not found!");
+                }
             }
             return View("Login");
         }
 
         public ActionResult Logout()
         {
-            if(Request.Cookies["user"] != null)
+            if (Request.Cookies["user"] != null)
             {
                 var user = new HttpCookie("user")
                 {
@@ -87,12 +86,12 @@ namespace webapi.Controllers
             return RedirectToActionPermanent("Index", "Home");
         }
 
-        private User CheckUser(string email, string password)
+        private User CheckUser(string email)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:6617/");
 
-            User user = new User();
+            User user = null;
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -102,7 +101,6 @@ namespace webapi.Controllers
             {
                 user = response.Content.ReadAsAsync<User>().Result;
             }
-
             return user;
         }
 

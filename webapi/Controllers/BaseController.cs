@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This controller is used to fill the the user, that is logged in, into the viewbag. This method is called "OnActionExecuting" and is able on every page.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +15,7 @@ namespace webapi.Controllers
 {
     public class BaseController : Controller
     {
+        //on action execute, checks for a user and puts it into the viewbag, if any
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var userCookie = Request.Cookies["user"];

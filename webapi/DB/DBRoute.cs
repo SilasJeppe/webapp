@@ -1,9 +1,8 @@
-﻿using Npgsql;
-using System;
+﻿//Class for connection the Route class to the database
+using Npgsql;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using webapi.Models;
 
 namespace webapi.DB
@@ -14,12 +13,14 @@ namespace webapi.DB
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
         private DBPoint dbPoint;
+
         public DBRoute()
         {
             dbPoint = new DBPoint();
             con = DBConnection.GetInstance().GetConnection();
         }
-
+        
+        //Method that gets a Route by Activity ID
         public Route GetRouteByActivityID(int id)
         {
             List<webapi.Models.Route> listRoute = new List<webapi.Models.Route>();
@@ -38,11 +39,11 @@ namespace webapi.DB
                     ActivityID = x.Field<int>("activityid"),
                     PointList = dbPoint.GetPointsByRouteID(x.Field<int>("id"))
                 };
-
                 listRoute.Add(route);
             }
             return listRoute.FirstOrDefault();
         }
+
         //Inserts a route in DB
         public void InsertRoute(Route r)
         {

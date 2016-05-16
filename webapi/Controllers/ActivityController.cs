@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Class with methods that communicates with the DB, and can be accessed via API
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;

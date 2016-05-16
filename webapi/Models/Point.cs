@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿//Class for the model Point used by the DB and API 
+using System;
 using System.Runtime.Serialization;
 using NpgsqlTypes;
 

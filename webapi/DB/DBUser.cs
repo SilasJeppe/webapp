@@ -1,9 +1,8 @@
-﻿using Npgsql;
-using System;
+﻿//Class for connection the User class to the database
+using Npgsql;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 
 namespace webapi.DB
 {
@@ -13,11 +12,14 @@ namespace webapi.DB
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
         private DBActivity dbActivity;
+
         public DBUser()
         {
             dbActivity = new DBActivity();
             con = DBConnection.GetInstance().GetConnection();
         }
+
+        //Method that gets a User from the database based on an ID
         public webapi.Models.User GetUser(int id)
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
@@ -44,13 +46,13 @@ namespace webapi.DB
                     password = x.Field<string>("passwordhash"),
                     ActivityList = dbActivity.GetAllActivityForUser(x.Field<int>("id"))
                 };
-
                 listUsers.Add(user);
             }
             con.Close();
             return listUsers.FirstOrDefault();
         }
 
+        //Method that gets a user from database based on email
         public webapi.Models.User GetUserFromEmail(string email)
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
@@ -77,13 +79,13 @@ namespace webapi.DB
                     password = x.Field<string>("passwordhash"),
                     ActivityList = dbActivity.GetAllActivityForUser(x.Field<int>("id"))
                 };
-
                 listUsers.Add(user);
             }
             con.Close();
             return listUsers.FirstOrDefault();
         }
 
+        //Method that gets all Users from database
         public List<webapi.Models.User> GetUsers()
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
@@ -115,6 +117,7 @@ namespace webapi.DB
             return listUsers;
         }
 
+        //Method that insert a User in the database given all the necessary input - with hashed password
         public void InsertUser(string firstname, string surname, string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
         {
             con.Open();
@@ -131,6 +134,7 @@ namespace webapi.DB
             int i = cmd.ExecuteNonQuery();
             con.Close();
         }
+
         //Deletes a User and his Activities
         public void DeleteUser(int id)
         {
@@ -143,6 +147,7 @@ namespace webapi.DB
             dbActivity.DeleteActivity(id);
         }
 
+        //Method for updating a User - NOT FULLY IMPLEMENTET
         public void UpdateUser(string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
         {
             con.Open();
