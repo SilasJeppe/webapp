@@ -35,7 +35,7 @@
 
                     @if (userInCookie != null)
                     {
-                        <li><a href="#">@ViewBag.User.Email</a></li>
+                        <li><a href="@Url.Action("Details", "UserView", new { id = @ViewBag.User.ID })">@ViewBag.User.Email</a></li>
                         <li><a href="@Url.Action("Logout", "UserView")">Logout</a></li>
                     }
                     else
@@ -51,7 +51,7 @@
         @RenderBody()
         <hr />
         @*Footer*@
-        <footer class="navbar-fixed-bottom text-center">
+        <footer class="navbar-fixed-bottom text-center panel-footer">
             <p>&copy; @DateTime.Now.Year - RunnerApp, Specialiseringsgruppe 42</p>
         </footer>
     </div>
