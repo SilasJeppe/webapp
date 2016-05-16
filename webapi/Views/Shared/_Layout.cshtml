@@ -36,12 +36,12 @@
                     @if (userInCookie != null)
                     {
                         <li><a href="#">@ViewBag.User.Email</a></li>
-                        <li><a href="@Url.Action("Logout", "Users")">Logout</a></li>
+                        <li><a href="@Url.Action("Logout", "UserView")">Logout</a></li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Opret bruger", "Create", "Users", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                        <li>@Html.ActionLink("Log ind", "Login", "Users", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        <li>@Html.ActionLink("Opret bruger", "Create", "UserView", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log ind", "Login", "UserView", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                     }
                 </ul>
             </div>
