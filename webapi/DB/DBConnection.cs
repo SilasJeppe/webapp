@@ -32,7 +32,7 @@ namespace webapi.DB
         //Singleton constructor
         public static DBConnection GetInstance()
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new DBConnection();
             }
@@ -51,12 +51,17 @@ namespace webapi.DB
             {
                 connection.Open();
             }
+            else if (connection.State == ConnectionState.Broken)
+            {
+                connection.Close();
+                connection.Open();
+            }
         }
 
         //Method that checks if connection is open, and closes if it is
         public void Close()
         {
-            if (connection.State == ConnectionState.Open)
+            if (connection.State == ConnectionState.Open || connection.State == ConnectionState.Broken || connection.State == ConnectionState.Connecting)
             {
                 connection.Close();
             }

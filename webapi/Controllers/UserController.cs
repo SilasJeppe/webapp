@@ -1,10 +1,6 @@
-﻿using System;
+﻿//Class for the User API
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using webapi.Models;
 using webapi.DB;
 using System.Web.Http.Description;
 using System.Threading.Tasks;
@@ -14,6 +10,7 @@ namespace webapi.Controllers
     public class UserController : ApiController
     {
         private DBUser db = new DBUser();
+
         // GET: api/User
         public IEnumerable<webapi.Models.User> Get()
         {
@@ -59,7 +56,7 @@ namespace webapi.Controllers
             return CreatedAtRoute("DefaultApi", new { }, u);
         }
 
-        // PUT: api/User/5
+        // PUT: api/User/5 - NOT IMPLEMENTET
         public void Put(int id, [FromBody]string value)
         {
             //Skal laves senere
