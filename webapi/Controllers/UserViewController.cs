@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -45,7 +46,7 @@ namespace webapi.Controllers
             {
                 PostUser(user);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "UserView");
             }
             catch
             {
@@ -98,6 +99,88 @@ namespace webapi.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(string email, string password)
+        {
+            User user;
+            if (ModelState.IsValid)
+            {
+                user = CheckUser(email);
+                if (user != null && webapi.BLL.Hash.ValidatePassword(password, user.password))
+                {
+                    var json = JsonConvert.SerializeObject(user);
+                    var userCookie = new HttpCookie("user", json);
+                    userCookie.Expires.AddDays(365);
+                    Response.SetCookie(userCookie);
+                    Response.Cookies.Add(userCookie);
+
+                    return RedirectToActionPermanent("Index", "Home");
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(404, "User not found!");
+                }
+            }
+            return View("Login");
+        }
+
+        public ActionResult Logout()
+        {
+            if (Request.Cookies["user"] != null)
+            {
+                var user = new HttpCookie("user")
+                {
+                    Expires = DateTime.Now.AddDays(-1),
+                    Value = null
+                };
+                Response.SetCookie(user);
+                //Response.Cookies.Add(user);
+            }
+            return RedirectToActionPermanent("Index", "Home");
+        }
+
+        private User CheckUser(string email)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:6617/");
+
+            User user = null;
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("api/user?email=" + email).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                user = response.Content.ReadAsAsync<User>().Result;
+            }
+            return user;
+        }
+
+        private List<User> GetUsers()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:6617/");
+
+            List<User> users = new List<User>();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("api/User?action=").Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                users = response.Content.ReadAsAsync<IEnumerable<User>>().Result.ToList();
+            }
+            return users;
         }
 
         private List<User> GetData()
@@ -160,6 +243,10 @@ namespace webapi.Controllers
             string str = "api/User/" + id;
             var res = client.DeleteAsync(str).Result;
         }
+
+
+
+        
 
     }
 }

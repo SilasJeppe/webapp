@@ -53,7 +53,7 @@ namespace webapi.Controllers
             if (ModelState.IsValid)
             {
                 user = CheckUser(email);
-                if(user != null && user.Email != email && webapi.BLL.Hash.ValidatePassword(password, user.password))
+                if(user != null && webapi.BLL.Hash.ValidatePassword(password, user.password))
                 {
                     var json = JsonConvert.SerializeObject(user);
                     var userCookie = new HttpCookie("user", json);

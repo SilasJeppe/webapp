@@ -195,7 +195,6 @@
     <Compile Include="Controllers\PointController.cs" />
     <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserViewController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DB\DBActivity.cs" />
@@ -273,9 +272,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Activities\Index.cshtml" />
     <Content Include="Views\Activities\View.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Users\Login.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\UserView\Login.cshtml" />
     <Content Include="Views\UserView\Index.cshtml" />
     <Content Include="Views\UserView\Details.cshtml" />
     <Content Include="Views\UserView\Create.cshtml" />
