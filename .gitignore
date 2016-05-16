@@ -7,7 +7,7 @@
 *.userosscache
 *.sln.docstates
 *.cache
-wepapi.dll
+webapi.dll
 webapi.pdb
 
 # User-specific files (MonoDevelop/Xamarin Studio)
