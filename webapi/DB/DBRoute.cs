@@ -9,7 +9,7 @@ namespace webapi.DB
 {
     public class DBRoute
     {
-        private NpgsqlConnection con;
+        private NpgsqlConnection con = new NpgsqlConnection(DBConnection.connectionstring);
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
         private DBPoint dbPoint;
@@ -17,12 +17,15 @@ namespace webapi.DB
         public DBRoute()
         {
             dbPoint = new DBPoint();
-            con = DBConnection.GetInstance().GetConnection();
         }
         
         //Method that gets a Route by Activity ID
         public Route GetRouteByActivityID(int id)
         {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
             List<webapi.Models.Route> listRoute = new List<webapi.Models.Route>();
             string sql = "SELECT * FROM public.route WHERE activityid = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);

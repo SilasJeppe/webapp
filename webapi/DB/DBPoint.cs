@@ -9,13 +9,12 @@ namespace webapi.DB
 {
     public class DBPoint
     {
-        private NpgsqlConnection con;
+        private NpgsqlConnection con = new NpgsqlConnection(DBConnection.connectionstring);
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
 
         public DBPoint()
         {
-            con = DBConnection.GetInstance().GetConnection();
         }
 
         //method that inserts a list of Points in the database
@@ -35,6 +34,11 @@ namespace webapi.DB
         //Method that gets a list of Points based on a Route ID
         public List<webapi.Models.Point> GetPointsByRouteID(int id)
         {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
+
             List<webapi.Models.Point> listPoints = new List<webapi.Models.Point>();
             string sql = "SELECT id, st_x(geom), st_y(geom), routeid FROM public.point WHERE routeid = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);

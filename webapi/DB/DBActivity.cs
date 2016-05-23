@@ -11,14 +11,14 @@ namespace webapi.DB
 {
     public class DBActivity
     {
-        private NpgsqlConnection con;
+        private NpgsqlConnection con = new NpgsqlConnection(DBConnection.connectionstring);
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
         private DBRoute dbRoute;
 
         public DBActivity()
         {
-            con = DBConnection.GetInstance().GetConnection();
+            //con = new NpgsqlConnection();
             dbRoute = new DBRoute();
         }
 
