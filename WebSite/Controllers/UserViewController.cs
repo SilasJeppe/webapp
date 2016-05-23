@@ -159,7 +159,7 @@ namespace webapi.Controllers
         private User CheckUser(string email)
         {
             HttpClient client = new HttpClient();
-            url = "http://" + Request.Url.Authority;
+            url = "http://eliten.azurewebsites.net";
             client.BaseAddress = new Uri(url);
 
             User user = null;
@@ -180,7 +180,7 @@ namespace webapi.Controllers
         private List<User> GetUsers()
         {
             HttpClient client = new HttpClient();
-            url = "http://" + Request.Url.Authority;
+            url = "http://eliten.azurewebsites.net";
             client.BaseAddress = new Uri(url);
 
             List<User> users = new List<User>();
@@ -200,7 +200,7 @@ namespace webapi.Controllers
         private User GetUser(int id)
         {
             HttpClient client = new HttpClient();
-            url = "http://" + Request.Url.Authority;
+            url = "http://eliten.azurewebsites.net";
             client.BaseAddress = new Uri(url);
 
             User user = new User();
@@ -221,7 +221,7 @@ namespace webapi.Controllers
         private void PostUser(User u)
         {
             HttpClient client = new HttpClient();
-            url = "http://" + Request.Url.Authority;
+            url = "http://eliten.azurewebsites.net";
             client.BaseAddress = new Uri(url);
 
             var res = client.PostAsJsonAsync("api/User", u).Result;
@@ -231,7 +231,7 @@ namespace webapi.Controllers
         private void DeleteUser(int id)
         {
             HttpClient client = new HttpClient();
-            url = "http://" + Request.Url.Authority;
+            url = "http://eliten.azurewebsites.net";
             client.BaseAddress = new Uri(url);
 
             client.DefaultRequestHeaders.Accept.Add(

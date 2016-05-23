@@ -1,28 +1,20 @@
-﻿using System;
+﻿//This controller is used to load the frontpage
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
+using Models;
 
-namespace WebSite.Controllers
+namespace webapi.Controllers
 {
-    public class HomeController : Controller
+    //this method loads the frontpage with the given title and returns view.
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Title = "RunnerApp";
 
             return View();
         }

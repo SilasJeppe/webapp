@@ -25,7 +25,7 @@ namespace webapi.Controllers
         private IEnumerable<Activity> GetData()
         {
             HttpClient client = new HttpClient();
-            url = Request.Url.AbsoluteUri;
+            url = "http://eliten.azurewebsites.net";
             client.BaseAddress = new Uri(url);
 
             IEnumerable<Activity> activities = null;
