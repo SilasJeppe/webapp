@@ -58,7 +58,10 @@ namespace webapi.DB
         //Gets all activities from database
         public List<webapi.Models.Activity> GetAllActivity()
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
             string sql = "SELECT * FROM public.activity";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);

@@ -44,6 +44,7 @@ namespace webapi.DB
                 };
                 listRoute.Add(route);
             }
+            con.Close();
             return listRoute.FirstOrDefault();
         }
 

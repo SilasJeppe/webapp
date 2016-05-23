@@ -34,7 +34,7 @@ namespace webapi.DB
         //Method that gets a list of Points based on a Route ID
         public List<webapi.Models.Point> GetPointsByRouteID(int id)
         {
-            if (con.State == ConnectionState.Closed)
+            if (con.State != ConnectionState.Open)
             {
                 con.Open();
             }
@@ -55,6 +55,7 @@ namespace webapi.DB
                 webapi.Models.Point p = new webapi.Models.Point(ID, npgP, RouteID);
                 listPoints.Add(p);
             }
+            con.Close();
             return listPoints;
         }
     }
