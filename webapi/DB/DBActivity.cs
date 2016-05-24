@@ -98,6 +98,7 @@ namespace webapi.DB
                 listActivity.Add(activity);
             }
             con.Close();
+            Console.WriteLine("Debug check");
             return listActivity;
         }
 
