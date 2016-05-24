@@ -16,12 +16,13 @@ namespace webapi.DB
         private static DBConnection instance = null;
 
         // PostgeSQL-style connection string
-        public static string connectionstring = String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};",
+        public static string connectionstring = String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};ConnectionLifeTime={5};",
             "188.166.166.22",   //{0} server ip
             "5432",             //{1} server port, default: 5432
             "postgis",          //{2} username
             "postgis",          //{3} password
-            "gisdb");           //{4} database name
+            "gisdb",            //{4} database name
+            "30");              //{5} idle lifetime
         #endregion
 
         // Making connection with Npgsql provider        
