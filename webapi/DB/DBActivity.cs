@@ -104,6 +104,14 @@ namespace webapi.DB
         //Method that get all activities for a User given the User ID
         public List<webapi.Models.Activity> GetAllActivityForUser(int id)
         {
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
             string sql = "SELECT * FROM public.activity WHERE userid = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -129,6 +137,7 @@ namespace webapi.DB
                 };
                 listActivity.Add(activity);
             }
+            con.Close();
             return listActivity;
         }
 

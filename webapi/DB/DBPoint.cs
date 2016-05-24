@@ -20,6 +20,14 @@ namespace webapi.DB
         //method that inserts a list of Points in the database
         public void InsertPoints(List<webapi.Models.Point> points)
         {
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             foreach (webapi.Models.Point p in points)
             {
                 string sql = "INSERT INTO public.point(geom, routeid) VALUES(ST_MakePoint(@Long, @Lat), @routeID)";
@@ -29,6 +37,7 @@ namespace webapi.DB
                 cmd.Parameters.AddWithValue("@routeID", p.RouteID);
                 int i = cmd.ExecuteNonQuery();
             }
+            con.Close();
         }
 
         //Method that gets a list of Points based on a Route ID

@@ -55,6 +55,14 @@ namespace webapi.DB
         //Inserts a route in DB
         public void InsertRoute(Route r)
         {
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "INSERT INTO public.route(activityid) VALUES (@activityid)";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@activityid", r.ActivityID);
@@ -65,6 +73,7 @@ namespace webapi.DB
                 p.RouteID = routeid;
             }
             dbPoint.InsertPoints(r.PointList);
+            con.Close();
         }
     }
 }
