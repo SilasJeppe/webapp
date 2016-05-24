@@ -8,7 +8,7 @@ namespace webapi.DB
 {
     public class DBUser
     {
-        private NpgsqlConnection con;
+        private NpgsqlConnection con = new NpgsqlConnection(DBConnection.connectionstring);
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
         private DBActivity dbActivity;
@@ -16,14 +16,21 @@ namespace webapi.DB
         public DBUser()
         {
             dbActivity = new DBActivity();
-            con = DBConnection.GetInstance().GetConnection();
+            //con = DBConnection.GetInstance().GetConnection();
         }
 
         //Method that gets a User from the database based on an ID
         public webapi.Models.User GetUser(int id)
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "SELECT * FROM public.user WHERE public.user.id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);
@@ -56,7 +63,14 @@ namespace webapi.DB
         public webapi.Models.User GetUserFromEmail(string email)
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "SELECT * FROM public.user WHERE public.user.email = @email";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@email", email);
@@ -89,7 +103,14 @@ namespace webapi.DB
         public List<webapi.Models.User> GetUsers()
         {
             List<webapi.Models.User> listUsers = new List<webapi.Models.User>();
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "SELECT id, firstname, surname, address, city, zipcode, phonenumber, email, passwordhash FROM public.user";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             NpgsqlDataReader dr = cmd.ExecuteReader();
@@ -120,7 +141,14 @@ namespace webapi.DB
         //Method that insert a User in the database given all the necessary input - with hashed password
         public void InsertUser(string firstname, string surname, string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "INSERT INTO public.user(firstname, surname, address, city, zipcode, phonenumber, email, passwordhash) VALUES(@firstname, @surname, @address, @city, @zipcode, @phonenumber, @email, @passwordhash)";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@firstname", firstname);
@@ -138,7 +166,14 @@ namespace webapi.DB
         //Deletes a User and his Activities
         public void DeleteUser(int id)
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "DELETE FROM public.user WHERE id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);
@@ -150,7 +185,14 @@ namespace webapi.DB
         //Method for updating a User - NOT FULLY IMPLEMENTET
         public void UpdateUser(string address, string city, int zipcode, int phonenumber, string email, string passwordhash)
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "UPDATE public.user SET address = @address, city = @city, zipcode = @zipcode, phonenumber = @phonenumber, email = @email, passwordhash = @passwordhash WHERE email = @email";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@address", address);

@@ -25,7 +25,14 @@ namespace webapi.DB
         //Gets specific Activity, used for delete
         public webapi.Models.Activity GetActivity(int id)
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
             string sql = "SELECT * FROM public.activity WHERE id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -60,6 +67,10 @@ namespace webapi.DB
         {
             if (con.State != ConnectionState.Open)
             {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
                 con.Open();
             }
             List<webapi.Models.Activity> listActivity = new List<webapi.Models.Activity>();
@@ -124,7 +135,14 @@ namespace webapi.DB
         //Method that inserts an Activity given correct input
         public void InsertActivity(Activity a)
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "INSERT INTO public.activity(name, description, distance, date, time, startaddress, endaddress, userid) VALUES (@name, @description, @distance, @date, @time, @startaddress, @endaddress, @userid)";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@name", a.Name);
@@ -144,7 +162,14 @@ namespace webapi.DB
         //Deletes an activity and the Route and Points 
         public void DeleteActivity(int id)
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "DELETE FROM public.activity WHERE id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);
@@ -155,7 +180,14 @@ namespace webapi.DB
         //Updates an Activity - NOT FULLY IMPLEMENTET
         public void UpdateActivity(int id, string name, string description, double distance, DateTime date, DateTime time, string startaddress, string endaddress, int userid)
         {
-            con.Open();
+            if (con.State != ConnectionState.Open)
+            {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
+                con.Open();
+            }
             string sql = "UPDATE public.activity SET name = @name, description = @description, distance = @distance, date = @date, time = @time, startaddress = @startaddress, endaddress = @endaddress  WHERE id = @id";
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@id", id);

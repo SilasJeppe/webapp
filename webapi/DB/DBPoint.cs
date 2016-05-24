@@ -36,6 +36,10 @@ namespace webapi.DB
         {
             if (con.State != ConnectionState.Open)
             {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
                 con.Open();
             }
 

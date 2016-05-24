@@ -22,8 +22,12 @@ namespace webapi.DB
         //Method that gets a Route by Activity ID
         public Route GetRouteByActivityID(int id)
         {
-            if (con.State == ConnectionState.Closed)
+            if (con.State != ConnectionState.Open)
             {
+                if (con.State != ConnectionState.Closed)
+                {
+                    con.Close();
+                }
                 con.Open();
             }
             List<webapi.Models.Route> listRoute = new List<webapi.Models.Route>();
