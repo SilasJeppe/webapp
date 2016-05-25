@@ -9,7 +9,6 @@ namespace webapi.DB
 {
     public class DBRoute
     {
-        private NpgsqlConnection con;
         private DataSet ds = new DataSet();
         private DataTable dt = new DataTable();
         private DBPoint dbPoint;
@@ -17,29 +16,39 @@ namespace webapi.DB
         public DBRoute()
         {
             dbPoint = new DBPoint();
-            con = DBConnection.GetInstance().GetConnection();
         }
         
         //Method that gets a Route by Activity ID
         public Route GetRouteByActivityID(int id)
         {
             List<webapi.Models.Route> listRoute = new List<webapi.Models.Route>();
-            string sql = "SELECT * FROM public.route WHERE activityid = @id";
-            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            cmd.Parameters.AddWithValue("@id", id);
-            NpgsqlDataReader dr = cmd.ExecuteReader();
-            dt.Reset();
-            dt.Load(dr);
-            List<DataRow> list = dt.AsEnumerable().ToList();
-            foreach (DataRow x in list)
+            using (NpgsqlConnection con = new NpgsqlConnection(DBConnection.connectionstring))
             {
-                webapi.Models.Route route = new webapi.Models.Route()
+                if (con.State != ConnectionState.Open)
                 {
-                    ID = x.Field<int>("id"),
-                    ActivityID = x.Field<int>("activityid"),
-                    PointList = dbPoint.GetPointsByRouteID(x.Field<int>("id"))
-                };
-                listRoute.Add(route);
+                    if (con.State != ConnectionState.Closed)
+                    {
+                        con.Close();
+                    }
+                    con.Open();
+                }
+                string sql = "SELECT * FROM public.route WHERE activityid = @id";
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@id", id);
+                NpgsqlDataReader dr = cmd.ExecuteReader();
+                dt.Reset();
+                dt.Load(dr);
+                List<DataRow> list = dt.AsEnumerable().ToList();
+                foreach (DataRow x in list)
+                {
+                    webapi.Models.Route route = new webapi.Models.Route()
+                    {
+                        ID = x.Field<int>("id"),
+                        ActivityID = x.Field<int>("activityid"),
+                        PointList = dbPoint.GetPointsByRouteID(x.Field<int>("id"))
+                    };
+                    listRoute.Add(route);
+                }
             }
             return listRoute.FirstOrDefault();
         }
@@ -47,16 +56,27 @@ namespace webapi.DB
         //Inserts a route in DB
         public void InsertRoute(Route r)
         {
-            string sql = "INSERT INTO public.route(activityid) VALUES (@activityid)";
-            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            cmd.Parameters.AddWithValue("@activityid", r.ActivityID);
-            int i = cmd.ExecuteNonQuery();
-            int routeid = GetRouteByActivityID(r.ActivityID).ID;
-            foreach (webapi.Models.Point p in r.PointList)
+            using (NpgsqlConnection con = new NpgsqlConnection(DBConnection.connectionstring))
             {
-                p.RouteID = routeid;
+                if (con.State != ConnectionState.Open)
+                {
+                    if (con.State != ConnectionState.Closed)
+                    {
+                        con.Close();
+                    }
+                    con.Open();
+                }
+                string sql = "INSERT INTO public.route(activityid) VALUES (@activityid)";
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@activityid", r.ActivityID);
+                int i = cmd.ExecuteNonQuery();
+                int routeid = GetRouteByActivityID(r.ActivityID).ID;
+                foreach (webapi.Models.Point p in r.PointList)
+                {
+                    p.RouteID = routeid;
+                }
+                dbPoint.InsertPoints(r.PointList);
             }
-            dbPoint.InsertPoints(r.PointList);
         }
     }
 }

@@ -243,6 +243,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\eliten - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\eliten2.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jmelosegui.googlemap.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
