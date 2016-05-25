@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapi", "webapi\webapi.csproj", "{2083966A-53B2-4C7C-B761-B2654D4C84B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite", "WebSite\WebSite.csproj", "{529DA37F-CDF5-42AB-A252-35395E5C7644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2083966A-53B2-4C7C-B761-B2654D4C84B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2083966A-53B2-4C7C-B761-B2654D4C84B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2083966A-53B2-4C7C-B761-B2654D4C84B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{529DA37F-CDF5-42AB-A252-35395E5C7644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{529DA37F-CDF5-42AB-A252-35395E5C7644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{529DA37F-CDF5-42AB-A252-35395E5C7644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{529DA37F-CDF5-42AB-A252-35395E5C7644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

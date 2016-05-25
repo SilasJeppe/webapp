@@ -1,0 +1,54 @@
+﻿@using System.Web.Script.Serialization;
+@{
+    var userInCookie = Request.Cookies["user"];
+    JavaScriptSerializer ser = new JavaScriptSerializer();
+
+}
+<div class="jumbotron">
+    <h1>RunnerApp - Specialiseringsprojekt</h1>
+    <p class="lead">
+        Velkommen til RunnerApp, et online system, hvor du kan tracke din løbetur, dele den med andre og finde dem igen senere.
+        Hent appen på App Store.
+    </p>
+    <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="btn btn-primary btn-lg glyphicon glyphicon-download">Download</a></p>
+</div>
+<div>
+    @if (userInCookie != null)
+    {
+        <div id="table" class="col-1 col-md-6">
+            @*Creating a table with the table and hover-css motifications*@
+            <table class="table text-left table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-left">Navn</th>
+                        <th class="text-left">Beskrivelse</th>
+                        <th class="text-left">Turens længde</th>
+                        <th class="text-left">Oprettet af</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*Looping through the list of activities and adding the items to the table.*@
+                    @foreach (var item in ViewBag.User.ActivityList)
+                    {
+                        <tr onclick="AddMarkers(@ser.Serialize(item.Route.PointList))">
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td>@item.Distance</td>
+                            <td>@item.UserID</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-1" id="map">
+            <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+                    async defer>
+            </script>
+        </div>
+    }
+    else
+    {
+        <h2 class="jumbotron"> Log ind for at se dine ruter <br /> <br /> <br /> <br /> </h2>
+    }
+</div>
