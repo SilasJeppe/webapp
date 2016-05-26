@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using Models;
 
-namespace webapi.Controllers
+namespace Controllers
 {
     public class UserViewController : BaseController
     {

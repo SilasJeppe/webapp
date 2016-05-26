@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Models;
 
-namespace webapi.Controllers
+namespace Controllers
 {
     //this method loads the frontpage with the given title and returns view.
     public class HomeController : BaseController

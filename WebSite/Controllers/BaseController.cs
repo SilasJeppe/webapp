@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
-namespace webapi.Controllers
+namespace Controllers
 {
     public class BaseController : Controller
     {

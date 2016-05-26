@@ -29,7 +29,7 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace webapi.BLL
+namespace BLL
 {
     /// <summary>               
     /// Salted password hashing with PBKDF2-SHA1.

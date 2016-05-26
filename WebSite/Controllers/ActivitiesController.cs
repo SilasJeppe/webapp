@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Web.Mvc;
 using Models;
 
-namespace webapi.Controllers
+namespace Controllers
 {
     public class ActivitiesController : BaseController
     {
